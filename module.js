@@ -48,14 +48,14 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
         //time the button is clicked:
 	var palabra_a_buscar = "mod";
 	var url = "http://localhost/moodle/mod/agora/proxy.php?url=http://smile.esi.uclm.es/agora/recurso/ajax/buscar/?cadena="
-	var parametroCfg = "&send_cookies=1&send_session=0& full_status=0&full_headers=0";
+	var parametroCfg = "&send_cookies=1&send_session=0&full_status=0&full_headers=0&mode=x";
 	var urlBusqueda = url+palabra_a_buscar+parametroCfg;
         var handleClick = function(o) {
             Y.log("Click detected; beginning io request to Yahoo! Pipes.", "info", "example");
 	    // Remove the default "X-Requested-With" header as this will
 	    // prevent the request from succeeding; the Pipes
 	    // resource will not accept user-defined HTTP headers.
-	  
+	  Y.io.header('X-Requested-With');
             var obj = Y.io(
                 //this is a specific Pipes feed, populated with cycling news:
                urlBusqueda,

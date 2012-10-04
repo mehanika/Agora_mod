@@ -193,7 +193,7 @@ if ( !$url ) {
 // Split header text into an array.
 $header_text = preg_split( '/[\r\n]+/', $header );
 
-if (isset($_GET['mode']) && $_GET['mode'] == 'native' ) {
+if ( $_GET['mode'] == 'native' ) {
   if ( !$enable_native ) {
     $contents = 'ERROR: invalid mode';
     $status = array( 'http_code' => 'ERROR' );
@@ -238,8 +238,8 @@ if (isset($_GET['mode']) && $_GET['mode'] == 'native' ) {
   $data['contents'] = $decoded_json ? $decoded_json : $contents;
   
   // Generate appropriate content-type header.
-  $is_xhr = strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-  header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
+ 
+  header( 'Content-type: application/json');
   
   // Get JSONP callback.
   $jsonp_callback = $enable_jsonp && isset($_GET['callback']) ? $_GET['callback'] : null;
