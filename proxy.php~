@@ -226,7 +226,7 @@ if ( $_GET['mode'] == 'native' ) {
   }
   
   // Propagate all cURL request / response info to the JSON data object.
-  if ( $_GET['full_status'] ) {
+  if ( isset($_GET['full_status']) ) {
     $data['status'] = $status;
   } else {
     $data['status'] = array();
@@ -239,7 +239,7 @@ if ( $_GET['mode'] == 'native' ) {
   
   // Generate appropriate content-type header.
  
-  header( 'Content-type: application/json';
+  header( 'Content-type: application/json');
   
   // Get JSONP callback.
   $jsonp_callback = $enable_jsonp && isset($_GET['callback']) ? $_GET['callback'] : null;

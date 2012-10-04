@@ -226,12 +226,12 @@ if ( $_GET['mode'] == 'native' ) {
   }
   
   // Propagate all cURL request / response info to the JSON data object.
-  if ( $_GET['full_status'] ) {
+ /** if ( isset($_GET['full_status']) ) {
     $data['status'] = $status;
   } else {
     $data['status'] = array();
     $data['status']['http_code'] = $status['http_code'];
-  }
+  }**/
   
   // Set the JSON data object contents, decoding it from JSON if possible.
   $decoded_json = json_decode( $contents );

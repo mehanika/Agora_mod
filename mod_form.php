@@ -58,6 +58,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	$mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
+	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('name', 'newmodulename', 'agora');
