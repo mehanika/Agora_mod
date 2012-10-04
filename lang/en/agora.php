@@ -17,25 +17,25 @@
 
 
 /**
- * English strings for newmodule
+ * English strings for agora
  *
  * You can have a rather longer description of the file as well,
  * if you like, and it can span multiple lines.
  *
  * @package    mod
- * @subpackage newmodule
+ * @subpackage agora
  * @copyright  2011 Your Name
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'newmodule';
+$string['modulename'] = 'agora';
 $string['modulenameplural'] = 'newmodules';
-$string['modulename_help'] = 'Use the newmodule module for... | The newmodule module allows...';
+$string['modulename_help'] = 'Use the agora module for... | The agora module allows...';
 $string['newmodulefieldset'] = 'Custom example fieldset';
-$string['newmodulename'] = 'newmodule name';
+$string['newmodulename'] = 'agora name';
 $string['newmodulename_help'] = 'This is the content of the help tooltip associated with the newmodulename field. Markdown syntax is supported.';
-$string['newmodule'] = 'newmodule';
-$string['pluginadministration'] = 'newmodule administration';
-$string['pluginname'] = 'newmodule';
+$string['agora'] = 'agora';
+$string['pluginadministration'] = 'agora administration';
+$string['pluginname'] = 'agora';
