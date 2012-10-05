@@ -47,22 +47,28 @@ class mod_agora_mod_form extends moodleform_mod {
         //-------------------------------------------------------------------------------
         // Adding the "general" fieldset, where all the common settings are showed
         $mform->addElement('header', 'general', get_string('general', 'form'));
-	
+	$buttonarray=array();
         // Adding the standard "name" field
-        $mform->addElement('text', 'name', 'busqueda agora', array('size'=>'64'));
+	
+        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'busqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
             $mform->setType('name', PARAM_CLEAN);
         }
-	$mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
+	 $buttonarray[] =& $mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
+	
+	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+	 
+	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
-        $mform->addRule('name', null, 'required', null, 'client');
-        $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        $mform->addHelpButton('name', 'newmodulename', 'agora');
-
+	
+       /**$mform->addRule('busqueda', null, 'required', null, 'client');
+        $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
+	
         // Adding the standard "intro" and "introformat" fields
         $this->add_intro_editor();
 
