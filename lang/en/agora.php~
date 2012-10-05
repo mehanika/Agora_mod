@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'agora';
 $string['modulenameplural'] = 'recursos_agora';
-$string['modulename_help'] = 'Modulo para buscar e insertar recursos de la plataforma agora';
+$string['agora_help'] = 'Modulo para buscar e insertar objetos de aprendizaje de la plataforma agora';
 $string['newmodulefieldset'] = 'Custom example fieldset';
 $string['newmodulename'] = 'agora name';
 $string['newmodulename_help'] = 'This is the content of the help tooltip associated with the newmodulename field. Markdown syntax is supported.';
