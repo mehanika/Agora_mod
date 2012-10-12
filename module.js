@@ -10,43 +10,37 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 	{
 		var funcionVisualizacion = "";
 		var urlDoc = encodeURIComponent(url);
-		var urlGdocsViewer = 'http://docs.google.com/viewer?url='+urlDoc+'&embedded=true';
+		//var urlGdocsViewer = 'http://docs.google.com/viewer?url='+urlDoc+'&embedded=true';
 		if(extensionArchivo == "ppt" || extensionArchivo == "pdf" || extensionArchivo == "doc" || extensionArchivo == "odt" || 			extensionArchivo == "xls")
 		{
-			funcionVisualizacion = "onclick=visualizar('"+titulo+"','"+urlGdocsViewer+"') return false;"
+			funcionVisualizacion = "onclick=\"openbox('"+titulo+"','"+url+"'); return false;\""
 		}
 
 		return funcionVisualizacion;
 	}
 	
-	function openbox(_url, fadin)
+	
+	
+	
+	function mostrarResultadoBusqueda(recursos)
 	{
-	  var box = document.getElementById('box'); 
-	  document.getElementById('shadowing').style.display='block';
+		var resultado_busqueda = Y.one("#resultado_busqueda");
+		var text='<table>';
+		for(recurso in recursos) {
 
-	  var btitle = document.getElementById('boxtitle');
-	  btitle.innerHTML = "Calidad de los objetos de aprendizaje";
-	  var url = encodeURIComponent(_url);
-	  var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
-	 var iframe = '<iframe src="'+newUrl+'" width="100%" height="100%" style="border: none;"></iframe>'
-	var content = document.getElementById('boxcontent');
-	var gframe  = document.getElementById('gframe');
-	gframe.src= newUrl;
-	//content.innerHTML = iframe;
+			if (recursos[recurso].titulo != '') {
+				text += '<tr>';
+				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
+	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
+				text += '<td><a href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+obtenerFuncionVisualizacionDoumentos(recursos[recurso].extension,url,recursos[recurso].titulo)+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '</tr>';
+			}
+		}
+		text += '</table>';
 
-	  if(fadin)
-	  {
-		 gradient("box", 0);
-		 fadein("box");
-	  }
-	  else
-	  { 	
-	    box.style.display='block';
-	  }  	
+      Y.log("exito en en recibir la respuesta");
+resultado_busqueda.set("innerHTML", text);
 	}
-	
-	
-	
 	
         var handleStart = function(id, a) {
             Y.log("iniciando busqueda");
@@ -59,24 +53,11 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
             //We use JSON.parse to sanitize the JSON (as opposed to simply performing an
             //JavaScript eval of the data):
-		var resultado_busqueda = Y.one("#resultado_busqueda");
+	
             var recursos = Y.JSON.parse(o.responseText);
 
-          
-var text='<table>';
-			for(recurso in recursos) {
-
-				if (recursos[recurso].titulo != '') {
-					text += '<tr>';
-					text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
-					text += '<td><a href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
-					text += '</tr>';
-				}
-			}
-			text += '</table>';
-
-          Y.log("exito en en recibir la respuesta");
-	resultado_busqueda.set("innerHTML", text);
+            mostrarResultadoBusqueda(recursos)
+            
         }
 
         //In the event that the HTTP status returned does not resolve to,
@@ -121,3 +102,61 @@ var text='<table>';
   
     }
 );
+
+
+function gradient(id, level)
+{
+	var box = document.getElementById(id);
+	box.style.opacity = level;
+	box.style.MozOpacity = level;
+	box.style.KhtmlOpacity = level;
+	box.style.filter = "alpha(opacity=" + level * 100 + ")";
+	box.style.display="block";
+	return;
+}
+
+
+function fadein(id) 
+{
+	var level = 0;
+	while(level <= 1)
+	{
+		setTimeout( "gradient('" + id + "'," + level + ")", (level* 1000) + 10);
+		level += 0.01;
+	}
+}
+
+function openbox(titulo,_url)
+{
+	var fadin = 1;
+  var box = document.getElementById('box'); 
+  document.getElementById('shadowing').style.display='block';
+
+  var btitle = document.getElementById('boxtitle');
+  btitle.innerHTML = "Calidad de los objetos de aprendizaje";
+  var url = encodeURIComponent(_url);
+  var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
+ var iframe = '<iframe src="'+newUrl+'" width="100%" height="100%" style="border: none;"></iframe>'
+var content = document.getElementById('boxcontent');
+var gframe  = document.getElementById('gframe');
+gframe.src= newUrl;
+//content.innerHTML = iframe;
+
+  if(fadin)
+  {
+	 gradient("box", 0);
+	 fadein("box");
+  }
+  else
+  { 	
+    box.style.display='block';
+  }
+  
+  return false;
+}
+
+function closebox()
+{
+   document.getElementById('box').style.display='none';
+   document.getElementById('shadowing').style.display='none';
+}

@@ -43,7 +43,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	global $PAGE,$CFG;
 
         $mform = $this->_form;
-
+	
         //-------------------------------------------------------------------------------
         // Adding the "general" fieldset, where all the common settings are showed
         $mform->addElement('header', 'general', get_string('general', 'form'));
@@ -56,6 +56,28 @@ class mod_agora_mod_form extends moodleform_mod {
         } else {
             $mform->setType('name', PARAM_CLEAN);
         }
+	
+	$lightbox = '<div id="shadowing"></div>
+<div id="box">
+  <span id="boxtitle"></span>
+	
+
+	<iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe> 	
+		<div class="buttons">
+    
+
+    <a href="#" class="negative" onclick= "closebox();" id="cancelar">
+        <img src="iconos/cross.png" alt=""/>
+        Cancelar
+    </a>
+	<button type="submit" class="positive" name="save">
+        <img src="iconos/apply2.png" alt=""/> 
+        Aceptar
+    </button>
+</div>
+
+	
+</div>';
 	 $buttonarray[] =& $mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
 	
 	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
@@ -64,6 +86,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
+	$mform->addElement('static', 'lightbox', '', $lightbox);
 	
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
         $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
