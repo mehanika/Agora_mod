@@ -9,7 +9,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 	function obtenerFuncionVisualizacionDoumentos(extensionArchivo,url,titulo)
 	{
 		var funcionVisualizacion = "";
-		var urlDoc = encodeURIComponent(url);
+		//var urlDoc = encodeURIComponent(url);
 		//var urlGdocsViewer = 'http://docs.google.com/viewer?url='+urlDoc+'&embedded=true';
 		if(extensionArchivo == "ppt" || extensionArchivo == "pdf" || extensionArchivo == "doc" || extensionArchivo == "odt" || 			extensionArchivo == "xls")
 		{
@@ -32,7 +32,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 				text += '<tr>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+obtenerFuncionVisualizacionDoumentos(recursos[recurso].extension,url,recursos[recurso].titulo)+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+obtenerFuncionVisualizacionDoumentos(recursos[recurso].extension,url,recursos[recurso].titulo)+'>' + recursos[recurso].titulo + '</a></td>';
 				text += '</tr>';
 			}
 		}
@@ -135,11 +135,13 @@ function openbox(titulo,_url)
   var btitle = document.getElementById('boxtitle');
   btitle.innerHTML = "Calidad de los objetos de aprendizaje";
   var url = encodeURIComponent(_url);
-  var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
- var iframe = '<iframe src="'+newUrl+'" width="100%" height="100%" style="border: none;"></iframe>'
-var content = document.getElementById('boxcontent');
-var gframe  = document.getElementById('gframe');
-gframe.src= newUrl;
+	var descarga = document.getElementById('descarga');
+	descarga.href=_url;
+	var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
+
+	var content = document.getElementById('boxcontent');
+	var gframe  = document.getElementById('gframe');
+	gframe.src= newUrl;
 //content.innerHTML = iframe;
 
   if(fadin)

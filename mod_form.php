@@ -64,8 +64,7 @@ class mod_agora_mod_form extends moodleform_mod {
 
 	<iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe> 	
 		<div class="buttons">
-    
-
+    <a id="descarga" target="_blank">Descargar documento</a>
     <a href="#" class="negative" onclick= "closebox();" id="cancelar">
         <img src="iconos/cross.png" alt=""/>
         Cancelar
