@@ -32,14 +32,14 @@ function abrir()
 
 	<iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe> 	
 		<div class="buttons">
-    <button type="submit" class="positive" name="save">
-      
+    
 
     <a href="#" class="negative" onclick= "closebox();" id="cancelar">
         <img src="iconos/cross.png" alt=""/>
         Cancelar
     </a>
-  <img src="iconos/apply2.png" alt=""/> 
+	<button type="submit" class="positive" name="save">
+        <img src="iconos/apply2.png" alt=""/> 
         Aceptar
     </button>
 </div>
@@ -47,7 +47,7 @@ function abrir()
 	
 </div>
 
-<a href="http://docs.google.com/viewer?url=http%3A%2F%2Fwww.cs.unc.edu%2F~azuma%2FARpresence.pdf&embedded=true" rel="shadowbox">Trying shadow box</a>
+<a href="http://docs.google.com/viewer?url=http%3A%2F%2F161.67.140.11%2Fagora%2Frecurso%2Fver%2Fcontenido%2F51&embedded=true" rel="shadowbox">Trying shadow box</a>
 <a href="#" onclick="abrir()"> Try again </a> <br/>
 <a href="#" onclick="openbox('http://cb.vu/unixtoolbox.pdf',1)">LightBox</a>
 

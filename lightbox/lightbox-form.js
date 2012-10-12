@@ -32,7 +32,7 @@ function openbox(_url, fadin)
   document.getElementById('shadowing').style.display='block';
 
   var btitle = document.getElementById('boxtitle');
-  btitle.innerHTML = "titulo";
+  btitle.innerHTML = "Calidad de los objetos de aprendizaje";
   var url = encodeURIComponent(_url);
   var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
  var iframe = '<iframe src="'+newUrl+'" width="100%" height="100%" style="border: none;"></iframe>'

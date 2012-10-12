@@ -50,7 +50,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	$buttonarray=array();
         // Adding the standard "name" field
 	
-        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'busqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
+        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'Busqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
