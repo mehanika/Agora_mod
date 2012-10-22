@@ -18,6 +18,20 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
 		return funcionVisualizacion;
 	}
+
+	function agregarFuncionesLightBox()
+	{
+		
+	var enlaces = Y.one("a.recursos");
+	enlaces.on('click',function(o)
+		{
+			var url = o.get('href');
+			var titulo = o.get('innerHTML');
+
+		}
+
+	);
+	}
 	
 	
 	
@@ -32,7 +46,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 				text += '<tr>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+obtenerFuncionVisualizacionDoumentos(recursos[recurso].extension,url,recursos[recurso].titulo)+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
 				text += '</tr>';
 			}
 		}
@@ -56,7 +70,8 @@ resultado_busqueda.set("innerHTML", text);
 	
             var recursos = Y.JSON.parse(o.responseText);
 
-            mostrarResultadoBusqueda(recursos)
+            mostrarResultadoBusqueda(recursos);
+	    agregarFuncionesLightBox();
             
         }
 
@@ -102,6 +117,8 @@ resultado_busqueda.set("innerHTML", text);
   
     }
 );
+
+
 
 
 function gradient(id, level)

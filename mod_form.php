@@ -81,7 +81,8 @@ class mod_agora_mod_form extends moodleform_mod {
 	
 	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
 	 
-	
+	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios'));
+	 $mform->addElement('text', 'titulo', '',array('readonly'=>'readonly','class'=>'camposEscondios'));	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');

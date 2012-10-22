@@ -159,7 +159,7 @@ button.regular, .buttons a.regular{
 /**/
 input[type="text"].camposEscondios{
 
-display: none
+visibility:hidden;
 
 
 }
