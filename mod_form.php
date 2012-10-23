@@ -65,11 +65,11 @@ class mod_agora_mod_form extends moodleform_mod {
 	<iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe> 	
 		<div class="buttons">
     <a id="descarga" target="_blank">Descargar documento</a>
-    <a href="#" class="negative" onclick= "closebox();" id="cancelar">
+    <a href="#" class="negative"  id="cancelar">
         <img src="iconos/cross.png" alt=""/>
         Cancelar
     </a>
-	<button type="submit" class="positive" name="save">
+	<button class="positive" name="save" id ="aceptarRecurso">
         <img src="iconos/apply2.png" alt=""/> 
         Aceptar
     </button>
@@ -81,8 +81,8 @@ class mod_agora_mod_form extends moodleform_mod {
 	
 	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
 	 
-	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios'));
-	 $mform->addElement('text', 'titulo', '',array('readonly'=>'readonly','class'=>'camposEscondios'));	
+	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
+	 $mform->addElement('text', 'titulo', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');

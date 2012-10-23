@@ -1,11 +1,74 @@
 YUI().use("io", "json-parse", "node", 'json-stringify',
     function(Y) {
 
-        //Data fetched will be displayed in a UL in the
-        //element #output:
-       /// var output = Y.one("#output ul");
+	var urlSeleccionada = false;
+	var tituloRecursoSeleccionado = false;
 
-        //Event handler called when the transaction begins:
+		
+	function gradient(id, level)
+	{
+		var box = document.getElementById(id);
+		box.style.opacity = level;
+		box.style.MozOpacity = level;
+		box.style.KhtmlOpacity = level;
+		box.style.filter = "alpha(opacity=" + level * 100 + ")";
+		box.style.display="block";
+		return;
+	}      	
+	
+
+	function fadein(id) 
+	{
+		var level = 0;
+		while(level <= 1)
+		{
+			setTimeout( "gradient('" + id + "'," + level + ")", (level* 1000) + 10);
+			level += 0.01;
+		}
+	}
+
+
+		function openbox(titulo,_url)
+		{
+			var fadin = 1;
+		  	var box = document.getElementById('box'); 
+		  	document.getElementById('shadowing').style.display='block';
+
+		  	var btitle = document.getElementById('boxtitle');
+		  	btitle.innerHTML = "Calidad de los objetos de aprendizaje";
+		  	var url = encodeURIComponent(_url);
+			var descarga = document.getElementById('descarga');
+			descarga.href=_url;
+			var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
+
+			var content = document.getElementById('boxcontent');
+			var gframe  = document.getElementById('gframe');
+			gframe.src= newUrl;
+		//content.innerHTML = iframe;
+
+			  if(fadin)
+			  {
+				 gradient("box", 0);
+				 fadein("box");
+			  }
+			  else
+			  { 	
+			    box.style.display='block';
+			  }
+			  
+			  return false;
+		}
+
+	function closebox()
+	{
+	   document.getElementById('box').style.display='none';
+	   document.getElementById('shadowing').style.display='none';
+		urlSeleccionada = false;
+	tituloRecursoSeleccionado = false;
+	}
+
+
+
 	function obtenerFuncionVisualizacionDoumentos(extensionArchivo,url,titulo)
 	{
 		var funcionVisualizacion = "";
@@ -21,17 +84,29 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
 	function agregarFuncionesLightBox()
 	{
-		
-	var enlaces = Y.one("a.recursos");
-	enlaces.on('click',function(o)
+	
+	var abrirLightBox  = function(o)
 		{
-			var url = o.get('href');
-			var titulo = o.get('innerHTML');
+			var enlaceSeleccionado = o.target; 
+			var url = enlaceSeleccionado.get("href");
+		
+			var titulo = enlaceSeleccionado.get("innerHTML");
+			var id = enlaceSeleccionado.get("id");
+			openbox(titulo,url);
+			Y.one("#aceptarRecurso").set("value",id);
+
+			urlSeleccionada = url;
+	 		tituloRecursoSeleccionado = titulo;
+			enlaceSeleccionado.onclick = function() {return false;};
 			return false;
 
 		}
 
-	);
+		
+	
+	Y.delegate('click', abrirLightBox,'#resultadoBusqueda', 'tr td a.recursos');
+	
+	
 	}
 	
 	
@@ -40,14 +115,14 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 	function mostrarResultadoBusqueda(recursos)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
-		var text='<table>';
+		var text='<table id="resultadoBusqueda">';
 		for(recurso in recursos) {
 
 			if (recursos[recurso].titulo != '') {
 				text += '<tr>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
 				text += '</tr>';
 			}
 		}
@@ -55,6 +130,12 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
       Y.log("exito en en recibir la respuesta");
 resultado_busqueda.set("innerHTML", text);
+	}
+
+
+	function crearTabla(recuros)
+	{
+		Y.create("td");
 	}
 	
         var handleStart = function(id, a) {
@@ -113,8 +194,24 @@ resultado_busqueda.set("innerHTML", text);
             var obj = Y.io(urlBusqueda,cfg);
         }
 
+
+	function aceptarRecurso(o)
+	{
+		var urlRecurso =  Y.one("#urlRecurso");
+		
+		urlRecurso.set("value",urlSeleccionada);
+
+		var titulo =  Y.one("#tituloRecurso");
+		
+		titulo.set("value",tituloRecursoSeleccionado);
+
+		return false;
+	}
+
         //add the click handler to the Load button.
         Y.on("click", handleClick, "#boton_buscar");
+	Y.on("click",closebox,"#cancelar");
+	Y.on("click",aceptarRecurso,"#aceptarRecurso")
   
     }
 );
@@ -144,9 +241,9 @@ function fadein(id)
 	}
 }
 
-function openbox(titulo,_url)
+function openbox(titulo,_url,idRecurso)
 {
-	var fadin = 1;
+var fadin = 1;
   var box = document.getElementById('box'); 
   document.getElementById('shadowing').style.display='block';
 
