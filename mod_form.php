@@ -69,10 +69,10 @@ class mod_agora_mod_form extends moodleform_mod {
         <img src="'.$CFG->wwwroot.'/mod/agora/iconos/cross.png" alt=""/>
         Cancelar
     </a>
-	<button class="positive" name="save" id ="aceptarRecurso">
+	<a class="positive" name="save" id ="aceptarRecurso">
         <img src="'.$CFG->wwwroot.'/mod/agora/iconos/apply.png" alt=""/> 
         Aceptar
-    </button>
+    </a>
 </div>
 
 	

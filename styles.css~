@@ -18,8 +18,8 @@
 {
 	display: none;
 	position: fixed;
-	top: 10%;
-	left: 6%;
+	top: 9%;
+	left: 8%;
 	width: 900px;
 	height: 450px;
 	padding: 48px;
@@ -69,6 +69,7 @@ margin-top: 2px;
     font-family:"Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
     font-size:12px;
     line-height:130%;
+    height:20px;
     text-decoration:none;
     font-weight:bold;
     color:#565656;

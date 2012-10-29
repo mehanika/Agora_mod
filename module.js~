@@ -84,24 +84,54 @@ YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
 		return funcionVisualizacion;
 	}
 
+
+	function esExtensionValida(extensionArchivo)
+	{
+
+		if(extensionArchivo == "ppt" || extensionArchivo == "pdf" || extensionArchivo == "doc" || extensionArchivo == "odt" || 			extensionArchivo == "xls")
+		{
+			return true;
+		}else{
+
+			return true;
+		}
+	}
+
 	function agregarFuncionesLightBox()
 	{
 	
 	var abrirLightBox  = function(o)
 		{
+
+			
+			
+			
 			
 			var enlaceSeleccionado = o.target; 
-			var url = enlaceSeleccionado.get("href");
-		
-			var titulo = enlaceSeleccionado.get("innerHTML");
-			var id = enlaceSeleccionado.get("id");
-			openbox(titulo,url);
-			Y.one("#aceptarRecurso").set("value",id);
 
-			urlSeleccionada = url;
-	 		tituloRecursoSeleccionado = titulo;
-			enlaceSeleccionado.onclick = function() {return false;};
-			return false;
+			var extension = enlaceSeleccionado.get("extension");
+
+			if(esExtensionValida(extension))
+			{
+			
+			
+				var url = enlaceSeleccionado.get("href");
+					
+
+						
+
+				var titulo = enlaceSeleccionado.get("innerHTML");
+				var id = enlaceSeleccionado.get("id");
+				openbox(titulo,url);
+				Y.one("#aceptarRecurso").set("value",id);
+
+				urlSeleccionada = url;
+		 		tituloRecursoSeleccionado = titulo;
+				enlaceSeleccionado.onclick = function() {return false;};
+				return false;
+			}else{
+				o.preventDefault();
+			}
 
 		}
 
@@ -125,7 +155,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
 				text += '<tr>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a extension="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
 				text += '</tr>';
 			}
 		}
