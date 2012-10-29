@@ -19,7 +19,7 @@
 	display: none;
 	position: fixed;
 	top: 10%;
-	left: 13%;
+	left: 8%;
 	width: 900px;
 	height: 450px;
 	padding: 48px;
@@ -163,4 +163,12 @@ display: none
 
 
 }
+
+#resultado_busqueda{
+
+height: 150px;
+overflow-y:auto;
+
+}
+
 

@@ -1,10 +1,12 @@
-YUI().use("io", "json-parse", "node", 'json-stringify',
+YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
     function(Y) {
 
 	var urlSeleccionada = false;
 	var tituloRecursoSeleccionado = false;
 
-		
+			
+	
+
 	function gradient(id, level)
 	{
 		var box = document.getElementById(id);
@@ -35,7 +37,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 		  	document.getElementById('shadowing').style.display='block';
 
 		  	var btitle = document.getElementById('boxtitle');
-		  	btitle.innerHTML = "Calidad de los objetos de aprendizaje";
+		  	btitle.innerHTML = titulo;
 		  	var url = encodeURIComponent(_url);
 			var descarga = document.getElementById('descarga');
 			descarga.href=_url;
@@ -104,7 +106,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
 		
 	
-	Y.delegate('click', abrirLightBox,'#resultadoBusqueda', 'tr td a.recursos');
+	Y.delegate('click', abrirLightBox,'#t_resultadoBusqueda', 'tr td a.recursos');
 	
 	
 	}
@@ -115,14 +117,14 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 	function mostrarResultadoBusqueda(recursos)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
-		var text='<table id="resultadoBusqueda">';
+		var text='<table id="t_resultadoBusqueda">';
 		for(recurso in recursos) {
 
 			if (recursos[recurso].titulo != '') {
 				text += '<tr>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
 				text += '</tr>';
 			}
 		}
@@ -130,6 +132,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
 
       Y.log("exito en en recibir la respuesta");
 resultado_busqueda.set("innerHTML", text);
+resultado_busqueda.setStyle("display", "");
 	}
 
 
@@ -181,18 +184,22 @@ resultado_busqueda.set("innerHTML", text);
 
 	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://smile.esi.uclm.es/agora/recurso/ajax/buscar/?cadena="
 
+	//	/agora/recurso/ajax/buscar/?recueperar="
        
 	 var handleClick = function(o) {
 		var palabraBuscar = Y.one("#campo_busqueda").get("value");
-		palabraBuscar = escape(palabraBuscar);
-		var urlBusqueda = url+palabraBuscar;
-            Y.log("Click detected; beginning io request to Yahoo! Pipes.", "info", "example");
-	    // Remove the default "X-Requested-With" header as this will
-	    // prevent the request from succeeding; the Pipes
-	    // resource will not accept user-defined HTTP headers.
-	  Y.io.header('X-Requested-With');
-            var obj = Y.io(urlBusqueda,cfg);
-        }
+		 var e_palabraBuscar = escape(palabraBuscar);
+		var urlBusqueda = url+e_palabraBuscar;
+            
+	    
+			if(palabraBuscar != "")
+			{
+		  
+			Y.io.header('X-Requested-With');
+			    var obj = Y.io(urlBusqueda,cfg);
+			}else{
+
+        		}
 
 
 	function aceptarRecurso(o)
@@ -230,7 +237,7 @@ function gradient(id, level)
 	return;
 }
 
-
+/**
 function fadein(id) 
 {
 	var level = 0;
@@ -276,4 +283,4 @@ function closebox()
 {
    document.getElementById('box').style.display='none';
    document.getElementById('shadowing').style.display='none';
-}
+}**/

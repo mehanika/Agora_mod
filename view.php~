@@ -55,7 +55,7 @@ add_to_log($course->id, 'agora', 'view', "view.php?id={$cm->id}", $agora->name, 
 /// Print the page header
 
 $PAGE->set_url('/mod/agora/view.php', array('id' => $cm->id));
-$PAGE->set_title(format_string('sapo'));
+$PAGE->set_title(format_string($agora->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
@@ -72,7 +72,18 @@ if ($agora->intro) { // Conditions to show the intro can change to look for own 
 }
 
 // Replace the following lines with you own code
-echo $OUTPUT->heading('Yay! It works!');
+echo $OUTPUT->heading($agora->name);
+
+echo $OUTPUT->container_start('recurso');
+	echo $OUTPUT->container_start('descarga');
+	echo '<div class="buttons"><a href="'.$agora->url_recurso.'" id="descarga" target="_blank">Descargar documento</a></div>';
+	echo $OUTPUT->container_end();
+echo $OUTPUT->container_start('visualizacion');
+echo '<div><iframe src="http://docs.google.com/viewer?url='.urlencode($agora->url_recurso).'&embedded=true" width="600" height="780" style="border: none;"></iframe></div>';
+echo $OUTPUT->container_end();
+
+
+echo $OUTPUT->container_end();
 
 // Finish the page
 echo $OUTPUT->footer();

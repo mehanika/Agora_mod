@@ -19,7 +19,7 @@
 	display: none;
 	position: fixed;
 	top: 10%;
-	left: 13%;
+	left: 6%;
 	width: 900px;
 	height: 450px;
 	padding: 48px;
@@ -159,8 +159,16 @@ button.regular, .buttons a.regular{
 /**/
 input[type="text"].camposEscondios{
 
-visibility:hidden;
+display: none
 
 
 }
+
+#resultado_busqueda{
+
+height: 150px;
+overflow-y:auto;
+
+}
+
 

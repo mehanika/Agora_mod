@@ -66,11 +66,11 @@ class mod_agora_mod_form extends moodleform_mod {
 		<div class="buttons">
     <a id="descarga" target="_blank">Descargar documento</a>
     <a href="#" class="negative"  id="cancelar">
-        <img src="iconos/cross.png" alt=""/>
+        <img src="'.$CFG->wwwroot.'/mod/agora/iconos/apply.png" alt=""/>
         Cancelar
     </a>
 	<button class="positive" name="save" id ="aceptarRecurso">
-        <img src="iconos/apply2.png" alt=""/> 
+        <img src="'.$CFG->wwwroot.'/mod/agora/iconos/apply.png" alt=""/> 
         Aceptar
     </button>
 </div>
@@ -82,10 +82,10 @@ class mod_agora_mod_form extends moodleform_mod {
 	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
 	 
 	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
-	 $mform->addElement('text', 'titulo', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
+	 $mform->addElement('text', 'name', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
-	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
+	$mform->addElement('static', 'resultado_busqueda', '', '<div id="resultado_busqueda" style="display:none;"></div>');
 	$mform->addElement('static', 'lightbox', '', $lightbox);
 	
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
