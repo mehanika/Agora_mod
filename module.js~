@@ -89,6 +89,7 @@ YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
 	
 	var abrirLightBox  = function(o)
 		{
+			
 			var enlaceSeleccionado = o.target; 
 			var url = enlaceSeleccionado.get("href");
 		
@@ -182,7 +183,7 @@ resultado_busqueda.setStyle("display", "");
 
       
 
-	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://smile.esi.uclm.es/agora/recurso/ajax/buscar/?cadena="
+	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://smile.esi.uclm.es/agora/recurso/ajax/buscar/?cadena=";
 
 	//	/agora/recurso/ajax/buscar/?recueperar="
        
@@ -192,15 +193,10 @@ resultado_busqueda.setStyle("display", "");
 		var urlBusqueda = url+e_palabraBuscar;
             
 	    
-			if(palabraBuscar != "")
-			{
-		  
+			
 			Y.io.header('X-Requested-With');
 			    var obj = Y.io(urlBusqueda,cfg);
-			}else{
-
-        		}
-
+		}
 
 	function aceptarRecurso(o)
 	{
@@ -220,7 +216,8 @@ resultado_busqueda.setStyle("display", "");
 	Y.on("click",closebox,"#cancelar");
 	Y.on("click",aceptarRecurso,"#aceptarRecurso")
   
-    }
+    
+}
 );
 
 
