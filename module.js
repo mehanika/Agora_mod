@@ -1,4 +1,4 @@
-YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
+YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
     function(Y) {
 
 	var urlSeleccionada = false;
@@ -149,10 +149,12 @@ YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
 		var text='<table id="t_resultadoBusqueda">';
+		
 		for(recurso in recursos) {
 
 			if (recursos[recurso].titulo != '') {
 				text += '<tr>';
+				text+='<td><input type="checkbox" class="idRecurso" value="'+recursos[recurso].id_recurso+'"/></td>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
 				text += '<td><a extension="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
@@ -163,7 +165,18 @@ YUI().use("io", "json-parse", "node", 'json-stringify','stylesheet',
 
       Y.log("exito en en recibir la respuesta");
 resultado_busqueda.set("innerHTML", text);
-resultado_busqueda.setStyle("display", "");
+
+
+		if(recursos.length == 0 )
+		{
+			resultado_busqueda.setStyle("display", "none");
+			
+						
+		}else{
+			resultado_busqueda.setStyle("display", "");
+			new Y.AtMostOneCheckboxGroup('.idRecurso');
+		}
+
 	}
 
 
@@ -222,10 +235,18 @@ resultado_busqueda.setStyle("display", "");
 		 var e_palabraBuscar = escape(palabraBuscar);
 		var urlBusqueda = url+e_palabraBuscar;
             
-	    
-			
-			Y.io.header('X-Requested-With');
+	    		if(palabraBuscar.length <= 0)
+			{
+				
+				 alert('Campo vacio');				
+			}else
+			{
+
+				Y.io.header('X-Requested-With');
 			    var obj = Y.io(urlBusqueda,cfg);
+			}
+			
+			
 		}
 
 	function aceptarRecurso(o)
