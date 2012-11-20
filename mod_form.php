@@ -41,7 +41,7 @@ class mod_agora_mod_form extends moodleform_mod {
      */
     public function definition() {
 	global $PAGE,$CFG;
-	
+	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
 
         $mform = $this->_form;
 	
@@ -63,7 +63,7 @@ class mod_agora_mod_form extends moodleform_mod {
   <span id="boxtitle"></span>
 	
 
-	<iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe> 	
+	<span id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></span>
 		<div class="buttons">
     <a id="descarga" target="_blank">Descargar documento</a>
     <a href="#" class="negative"  id="cancelar">
@@ -85,6 +85,8 @@ class mod_agora_mod_form extends moodleform_mod {
 	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
 	 $mform->addElement('text', 'name', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
+	$ps = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/procesadorBusquedas.js"></script>';
+	$mform->addElement('static', 'procesarBusqueda', '', $ps);
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<div id="resultado_busqueda" style="display:none;"></div>');
 	$mform->addElement('static', 'detalle_recurso', '', '<div id="detalleRecurso" ></div>');

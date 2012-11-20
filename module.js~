@@ -1,4 +1,4 @@
-YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
+YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
     function(Y) {
 
 	var urlSeleccionada = false;
@@ -107,11 +107,12 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 			
 			
 			
+			var enlaceSeleccionado =  o.currentTarget
+			//var enlaceSeleccionado = o.target; 
+                        var id = enlaceSeleccionado.get("id"); 
 			
-			var enlaceSeleccionado = o.target; 
-
-			var extension = enlaceSeleccionado.get("extension");
-
+			
+			var extension =  enlaceSeleccionado.get("ext");	
 			if(esExtensionValida(extension))
 			{
 				o.preventDefault();
@@ -119,7 +120,7 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 				var url = enlaceSeleccionado.get("href");						
 
 				var titulo = enlaceSeleccionado.get("innerHTML");
-				var id = enlaceSeleccionado.get("id");
+				
 				idSeleccionada = id;
 				
 				openbox(titulo,url);
@@ -129,8 +130,22 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 		 		tituloRecursoSeleccionado = titulo;
 				enlaceSeleccionado.onclick = function() {return false;};
 				return false;
-			}else{
-				
+			}else if(extension == "swf")
+			{
+			 
+
+			  o.preventDefault();
+			
+				var url = enlaceSeleccionado.get("href");						
+
+				var titulo = enlaceSeleccionado.get("innerHTML");
+				var id = enlaceSeleccionado.get("id");
+				idSeleccionada = id;
+				 mostrarSWF(url,titulo);	
+				openbox(titulo,url);
+				Y.one("#aceptarRecurso").set("value",id);
+	
+		   	  
 			}
 
 		}
@@ -144,6 +159,58 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 	
 	
 	
+	function mostrarResultadoT_Busqueda(recursos)
+	{
+		var resultado_busqueda = Y.one("#resultado_busqueda");
+			var tablaResultados = mostrarTablaResultados(recursos);
+			resultado_busqueda.setHTML(tablaResultados);
+
+		if(recursos.length == 0 )
+		{
+			resultado_busqueda.setStyle("display", "none");
+			
+						
+		}else{
+			resultado_busqueda.setStyle("display", "");
+			new Y.AtMostOneCheckboxGroup('.idRecurso');
+		
+		}
+	}
+
+
+
+
+	function mostrarTablaResultados(recursos)
+{
+		var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
+		for(var i = 0; i < recursos.length; i++) {
+		var recurso = recursos[i];
+		
+			var filaActual = obtenerFila(recurso);
+			tabla.append(filaActual);
+		}
+
+	return tabla;
+}
+
+
+function obtenerFila(recurso)
+{
+   var fila = Y.Node.create('<tr></tr>');
+   var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
+  var columnaImagen =Y.Node.create( '<td><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></td>');
+
+
+ var columnaRecurso = Y.Node.create('<td><a ax="px" ext="'+recurso.extension+'" id="'+recurso.id_recurso+'" class="recursos" target="_blank" href="' + recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso + '" onclick="javascript: return true;" title="' + recurso.comentario + '. ' + recurso.descripcion + '" '+'>' + recurso.titulo + '</a><br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span></td>');
+
+	fila.append(columnaCheckbox);
+	fila.append(columnaImagen);
+	fila.append(columnaRecurso);
+
+	return fila;
+}
+
+
 	
 	function mostrarResultadoBusqueda(recursos)
 	{
@@ -157,7 +224,7 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 				text+='<td><input type="checkbox" class="idRecurso" value="'+recursos[recurso].id_recurso+'" id="check_'+recursos[recurso].id_recurso+'"/></td>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a extension="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a><br/>'.recursos[recurso].descripcion. '</td>';
+				text += '<td><a ax="px" ext="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a><br/>'+recursos[recurso].descripcion+ '<br/>Extension: <span id="ext_'+recursos[recurso].id_recurso+'">'+recursos[recurso].extension+'</span></td>';
 				text += '</tr>';
 			}
 		}
@@ -197,7 +264,7 @@ resultado_busqueda.set("innerHTML", text);
 	
             var recursos = Y.JSON.parse(o.responseText);
 
-            mostrarResultadoBusqueda(recursos);
+            mostrarResultadoT_Busqueda(recursos);
 	    agregarFuncionesLightBox();
             
         }
@@ -269,6 +336,12 @@ resultado_busqueda.set("innerHTML", text);
 
 		return false;
 	}
+
+	function mostrarSWF(ruta,nombre)
+	{
+		var so = new SWFObject(ruta, nombre, "500", "500", "8", "#336699");
+			so.write("preview");
+        }
 
 
 	function mostrarDellaRecursoSeleccionado()
@@ -347,3 +420,39 @@ function closebox()
    document.getElementById('box').style.display='none';
    document.getElementById('shadowing').style.display='none';
 }**/
+
+YUI().use('node',"json-parse",'json-stringify', function (Y) {
+    // Node is available and ready for use. Add implementation
+    // code here.
+
+
+
+function mostrarTablaResultados(recursos)
+{
+
+		for(var i = 0; i < recursos.length; i++) {
+		var recurso = recursos[i];
+		var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
+			var filaActual = obtenerFila(recurso);
+			tabla.append(filaActual);
+		}
+
+	return tabla;
+}
+
+
+function obtenerFila(recurso)
+{
+   var fila = Y.Node.create('<tr></r>');
+   var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
+  var columnaImagen =Y.Node.create( '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>');
+
+
+ var columnaRecurso = Y.Node.create('<td><a ax="px" ext="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a><br/>'+recursos[recurso].descripcion+ '<br/>Extension: <span id="ext_'+recursos[recurso].id_recurso+'">'+recursos[recurso].extension+'</span></td>');
+
+	fila.append(columnaCheckbox);
+	fila.append(columnaImagen);
+	fila.append(columnaRecurso);
+}
+
+});
