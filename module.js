@@ -3,6 +3,7 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 
 	var urlSeleccionada = false;
 	var tituloRecursoSeleccionado = false;
+	var idSeleccionada = "";
 
 			
 	
@@ -115,13 +116,12 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 			{
 				o.preventDefault();
 			
-				var url = enlaceSeleccionado.get("href");
-					
-
-						
+				var url = enlaceSeleccionado.get("href");						
 
 				var titulo = enlaceSeleccionado.get("innerHTML");
 				var id = enlaceSeleccionado.get("id");
+				idSeleccionada = id;
+				
 				openbox(titulo,url);
 				Y.one("#aceptarRecurso").set("value",id);
 
@@ -138,7 +138,7 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 		
 	
 	Y.delegate('click', abrirLightBox,'#t_resultadoBusqueda', 'tr td a.recursos');
-	
+	Y.delegate('click', function(o){alert(o.target.get("value"));},'#t_resultadoBusqueda', 'tr td input.idRecurso');
 	
 	}
 	
@@ -154,10 +154,10 @@ YUI().use("io", "json-parse", "node",'gallery-checkboxgroups' ,'json-stringify',
 
 			if (recursos[recurso].titulo != '') {
 				text += '<tr>';
-				text+='<td><input type="checkbox" class="idRecurso" value="'+recursos[recurso].id_recurso+'"/></td>';
+				text+='<td><input type="checkbox" class="idRecurso" value="'+recursos[recurso].id_recurso+'" id="check_'+recursos[recurso].id_recurso+'"/></td>';
 				text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
 	var url =  recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso;
-				text += '<td><a extension="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a></td>';
+				text += '<td><a extension="'+recursos[recurso].extension+'" id="'+recursos[recurso].id_recurso+'" class="recursos" target="_blank" href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" onclick="javascript: return true;" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '" '+'>' + recursos[recurso].titulo + '</a><br/>'+recursos[recurso].descripcion+ '</td>';
 				text += '</tr>';
 			}
 		}
@@ -175,15 +175,13 @@ resultado_busqueda.set("innerHTML", text);
 		}else{
 			resultado_busqueda.setStyle("display", "");
 			new Y.AtMostOneCheckboxGroup('.idRecurso');
+		
 		}
 
 	}
 
 
-	function crearTabla(recuros)
-	{
-		Y.create("td");
-	}
+	
 	
         var handleStart = function(id, a) {
             Y.log("iniciando busqueda");
@@ -251,15 +249,32 @@ resultado_busqueda.set("innerHTML", text);
 
 	function aceptarRecurso(o)
 	{
-		var urlRecurso =  Y.one("#urlRecurso");
-		
-		urlRecurso.set("value",urlSeleccionada);
 
+		o.preventDefault();
+		var checkboxSeleccionado = Y.one("#check_"+idSeleccionada);
+		checkboxSeleccionado.set("checked","true");	
+		
+
+		//Estableciendo la url del recurso		
+		var urlRecurso =  Y.one("#urlRecurso");
+			
+		urlRecurso.set("value",urlSeleccionada);
+		
+		//Estableciendo el titulo del recurso
 		var titulo =  Y.one("#tituloRecurso");
 		
 		titulo.set("value",tituloRecursoSeleccionado);
+		
+		closebox();
 
 		return false;
+	}
+
+
+	function mostrarDellaRecursoSeleccionado()
+	{
+		var tabla = Y.Node.create("<table></table>");
+		Y.one("#detalleRecurso").appendChild(tabla);
 	}
 
         //add the click handler to the Load button.

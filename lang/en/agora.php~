@@ -30,7 +30,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'agora';
+$string['modulename'] = 'Agora';
 $string['modulenameplural'] = 'recursos_agora';
 $string['modulename_help'] = 'Modulo para buscar e insertar objetos de aprendizaje de la plataforma agora';
 $string['newmodulefieldset'] = 'Custom example fieldset';

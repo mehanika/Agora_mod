@@ -18,7 +18,7 @@
 {
 	display: none;
 	position: fixed;
-	top: 6%;
+	top: 5%;
 	left: 8%;
 	width: 900px;
 	height: 450px;
@@ -163,6 +163,11 @@ input[type="text"].camposEscondios{
 display: none
 
 
+}
+
+iframe#gframe{
+ width: 100%
+ height: 90%;
 }
 
 #resultado_busqueda{

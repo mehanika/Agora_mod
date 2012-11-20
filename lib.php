@@ -48,6 +48,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 function agora_supports($feature) {
     switch($feature) {
+	case FEATURE_MOD_ARCHETYPE:           return MOD_ARCHETYPE_RESOURCE;
         case FEATURE_MOD_INTRO:         return true;
         default:                        return null;
     }

@@ -38,4 +38,4 @@ $string['newmodulename'] = 'agora name';
 $string['newmodulename_help'] = 'This is the content of the help tooltip associated with the newmodulename field. Markdown syntax is supported.';
 $string['agora'] = 'Agora';
 $string['pluginadministration'] = 'agora administration';
-$string['pluginname'] = 'Agora';
+$string['pluginname'] = 'agora';
