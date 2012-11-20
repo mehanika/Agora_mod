@@ -50,8 +50,19 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-/***************************** remove these comment marks and modify the code as needed
-    'mod/newmodule:view' => array(
+
+	'mod/agora:addinstance' => array(
+        'riskbitmask' => RISK_XSS,
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+),
+
+    'mod/agora:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => array(
@@ -71,6 +82,6 @@ $capabilities = array(
             'student' => CAP_ALLOW
         )
     ),
-******************************/
+
 );
 
