@@ -98,7 +98,7 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 		}
 	}
 
-	function agregarFuncionesLightBox()
+	function agregarFuncionesLightBox(extension)
 	{
 	
 	var abrirLightBox  = function(o)
@@ -158,6 +158,54 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 	}
 	
 	
+
+function abrirLightBoxT (o,extension)
+		{
+
+			
+			
+			
+			var enlaceSeleccionado =  o.currentTarget
+			//var enlaceSeleccionado = o.target; 
+                        var id = enlaceSeleccionado.get("id"); 
+			
+			
+			
+			if(esExtensionValida(extension))
+			{
+				o.preventDefault();
+			
+				var url = enlaceSeleccionado.get("href");						
+
+				var titulo = enlaceSeleccionado.get("innerHTML");
+				
+				idSeleccionada = id;
+				
+				openbox(titulo,url);
+				Y.one("#aceptarRecurso").set("value",id);
+
+				urlSeleccionada = url;
+		 		tituloRecursoSeleccionado = titulo;
+				enlaceSeleccionado.onclick = function() {return false;};
+				return false;
+			}else if(extension == "swf")
+			{
+			 
+
+			  o.preventDefault();
+			
+				var url = enlaceSeleccionado.get("href");						
+
+				var titulo = enlaceSeleccionado.get("innerHTML");
+				var id = enlaceSeleccionado.get("id");
+				idSeleccionada = id;
+				 mostrarSWF(url,titulo);	
+				openbox(titulo,url);
+				Y.one("#aceptarRecurso").set("value",id);
+	
+		   	  
+			}
+}
 	
 	function mostrarResultadoT_Busqueda(recursos)
 	{
@@ -200,8 +248,11 @@ function obtenerFila(recurso)
    var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
   var columnaImagen =Y.Node.create( '<td><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></td>');
 
-
- var columnaRecurso = Y.Node.create('<td><a ax="px" ext="'+recurso.extension+'" id="'+recurso.id_recurso+'" class="recursos" target="_blank" href="' + recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso + '" onclick="javascript: return true;" title="' + recurso.comentario + '. ' + recurso.descripcion + '" '+'>' + recurso.titulo + '</a><br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span></td>');
+var enlace = crearEnlace(recurso);
+var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
+ var columnaRecurso = Y.Node.create('<td></td>');
+  columnaRecurso.append(enlace);
+  columnaRecurso.append(descripcion); 
 
 	fila.append(columnaCheckbox);
 	fila.append(columnaImagen);
@@ -209,6 +260,17 @@ function obtenerFila(recurso)
 
 	return fila;
 }
+
+function crearEnlace(recurso)
+	{
+	var enlace  = Y.Node.create('<a></a>');
+	enlace.set("href", recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso);
+	enlace.set("ext", recurso.extension);
+	enlace.set("id",recurso.id_recurso);
+	enlace.set("innerHTML", recurso.titulo);
+	enlace.on("click",abrirLightBoxT,null,recurso.extesion);
+	return enlace;	
+	}
 
 
 	
