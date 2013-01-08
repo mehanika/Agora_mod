@@ -62,6 +62,37 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 			  return false;
 		}
 
+		function openboxSWF(titulo,_url)
+		{
+			var fadin = 1;
+		  	var box = document.getElementById('box'); 
+		  	document.getElementById('shadowing').style.display='block';
+
+		  	var btitle = document.getElementById('boxtitle');
+		  	btitle.innerHTML = titulo;
+		  	var url = encodeURIComponent(_url);
+			var descarga = document.getElementById('descarga');
+			descarga.href=_url;
+			//var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
+
+			var content = document.getElementById('boxcontent');
+			var gframe  = document.getElementById('gframe');
+			//gframe.src= newUrl;
+		//content.innerHTML = iframe;
+
+			  if(fadin)
+			  {
+				 gradient("box", 0);
+				 fadein("box");
+			  }
+			  else
+			  { 	
+			    box.style.display='block';
+			  }
+			  
+			  return false;
+		}
+
 	function closebox()
 	{
 	   document.getElementById('box').style.display='none';
@@ -94,7 +125,7 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 			return true;
 		}else{
 
-			return true;
+			return false;
 		}
 	}
 
@@ -130,7 +161,8 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 		 		tituloRecursoSeleccionado = titulo;
 				enlaceSeleccionado.onclick = function() {return false;};
 				return false;
-			}else if(extension == "swf")
+			}
+			else if(extension == "swf")
 			{
 			 
 
@@ -142,7 +174,7 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 				var id = enlaceSeleccionado.get("id");
 				idSeleccionada = id;
 				 mostrarSWF(url,titulo);	
-				openbox(titulo,url);
+				openboxSWF(titulo,url);
 				Y.one("#aceptarRecurso").set("value",id);
 	
 		   	  
@@ -198,9 +230,13 @@ function abrirLightBoxT (o,extension)
 
 				var titulo = enlaceSeleccionado.get("innerHTML");
 				var id = enlaceSeleccionado.get("id");
+				
 				idSeleccionada = id;
+				urlSeleccionada = url;
+		 		tituloRecursoSeleccionado = titulo;
+
 				 mostrarSWF(url,titulo);	
-				openbox(titulo,url);
+				openboxSWF(titulo,url);
 				Y.one("#aceptarRecurso").set("value",id);
 	
 		   	  
@@ -400,11 +436,7 @@ resultado_busqueda.set("innerHTML", text);
 		return false;
 	}
 
-	function mostrarSWF(ruta,nombre)
-	{
-		var so = new SWFObject(ruta, nombre, "500", "500", "8", "#336699");
-			so.write("preview");
-        }
+	
 
 
 	function mostrarDellaRecursoSeleccionado()
@@ -519,3 +551,8 @@ function obtenerFila(recurso)
 }
 
 });
+
+function mostrarSWF(ruta,nombre)
+	{
+		swfobject.embedSWF(ruta, "preview", "300", "120", "9.0.0");
+        }

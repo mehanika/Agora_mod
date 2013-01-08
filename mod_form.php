@@ -41,7 +41,7 @@ class mod_agora_mod_form extends moodleform_mod {
      */
     public function definition() {
 	global $PAGE,$CFG;
-	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+	//$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
 
         $mform = $this->_form;
 	
@@ -60,10 +60,10 @@ class mod_agora_mod_form extends moodleform_mod {
 	
 	$lightbox = '<div id="shadowing"></div>
 <div id="box">
-  <span id="boxtitle"></span>
+  <div id="boxtitle"></div>
 	
 
-	<span id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></span>
+	<div id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></div>
 		<div class="buttons">
     <a id="descarga" target="_blank">Descargar documento</a>
     <a href="#" class="negative"  id="cancelar">
@@ -84,6 +84,9 @@ class mod_agora_mod_form extends moodleform_mod {
 	 
 	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
 	 $mform->addElement('text', 'name', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
+	$swf = 	'<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/swfobject/swfobject.js"></script>';
+	 $mform->addElement('static', 'swf', '', $swf);
+
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
 	$ps = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/procesadorBusquedas.js"></script>';
 	$mform->addElement('static', 'procesarBusqueda', '', $ps);

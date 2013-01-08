@@ -177,4 +177,7 @@ overflow-y:auto;
 
 }
 
-
+#resultado_busqueda #t_resultadoBusqueda tr:hover
+{
+ background-color:#AEFFA3;
+}
