@@ -28,7 +28,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-require_once("$CFG->dirroot/mod/newmodule/lib.php");
+require_once("$CFG->dirroot/mod/agora/lib.php");
 /**
  * Does something really useful with the passed things
  *

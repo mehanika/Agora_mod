@@ -98,8 +98,10 @@ class mod_agora_mod_form extends moodleform_mod {
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
         $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
-	
+	$mform->addElement('text', 'agora_url', 'Direccion agora', 
+			array('size'=>'64','id'=>'campo_busqueda','value'=> $CGF->'urlAgora'));	
         // Adding the standard "intro" and "introformat" fields
+	
         $this->add_intro_editor();
 
         //-------------------------------------------------------------------------------

@@ -46,4 +46,7 @@ if ($ADMIN->fulltree) {
 
     //--- general settings -----------------------------------------------------------------------------------
 
+    $settings->add(new admin_setting_configtext('urlAgora', get_string('urlAgora', 'agora'),
+                       get_string('url por defecto de agora', 'agora'), 'http://smile.esi.uclm.es/',PARAM_TEXT);	
+
 }
