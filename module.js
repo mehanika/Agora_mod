@@ -97,12 +97,26 @@ YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json
 	{
 	   document.getElementById('box').style.display='none';
 	   document.getElementById('shadowing').style.display='none';
-		urlSeleccionada = false;
-	tituloRecursoSeleccionado = false;
+	   urlSeleccionada = false;
+	   tituloRecursoSeleccionado = false;
+	    restablecerLightBox();
+	       
 	}
 
 
+	
+	function restablecerLightBox()
+	{
+		 var preview = Y.Node.create('<div id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></div>');
+	   var box = Y.one('#box');
+	   var titulo = Y.one('#boxtitle');
+	   box.insert(preview,2);
+	   var hijos = box.get('children');
+	  var prueba = hijos.item(2).remove();
+	}
 
+	
+	
 	function obtenerFuncionVisualizacionDoumentos(extensionArchivo,url,titulo)
 	{
 		var funcionVisualizacion = "";
@@ -554,5 +568,5 @@ function obtenerFila(recurso)
 
 function mostrarSWF(ruta,nombre)
 	{
-		swfobject.embedSWF(ruta, "preview", "300", "120", "9.0.0");
+		swfobject.embedSWF(ruta, "preview", "800", "300", "9.0.0");
         }
