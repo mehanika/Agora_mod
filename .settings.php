@@ -26,11 +26,5 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-if ($ADMIN->fulltree) {
-    require_once("$CFG->libdir/resourcelib.php");
-
-
-    //--- general settings -----------------------------------------------------------------------------------
-    $settings->add(new admin_setting_configtext('urlServidor', 'urlServidor', 'Direccion del servidor de agora', 'http://smile.esi.uclm.es',PARAM_TEXT));
+if( $ADMIN->fulltree ) {
 }
-

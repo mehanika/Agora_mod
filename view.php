@@ -34,7 +34,7 @@ require_once(dirname(__FILE__).'/lib.php');
 
 $id = optional_param('id', 0, PARAM_INT); // course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // agora instance ID - it should be named as the first character of the module
-
+global $CFG;
 if ($id) {
     $cm         = get_coursemodule_from_id('agora', $id, 0, false, MUST_EXIST);
     $course     = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -63,7 +63,7 @@ $PAGE->set_context($context);
 //$PAGE->set_cacheable(false);
 //$PAGE->set_focuscontrol('some-html-id');
 //$PAGE->add_body_class('agora-'.$somevar);
-
+$agorasettings = get_config('agora');
 // Output starts here
 echo $OUTPUT->header();
 
@@ -81,7 +81,7 @@ echo $OUTPUT->container_start('recurso');
 	echo $OUTPUT->container_start('visualizacion');
 		echo '<div><iframe src="http://docs.google.com/viewer?url='.urlencode($agora->url_recurso).'&embedded=true" width="600" height="780" style="border: none;"></iframe></div>';
 	echo $OUTPUT->container_end();
-
+	
 
 echo $OUTPUT->container_end();
 

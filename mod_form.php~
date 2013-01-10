@@ -42,8 +42,18 @@ class mod_agora_mod_form extends moodleform_mod {
     public function definition() {
 	global $PAGE,$CFG;
 	//$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+	
+	$jsmodule = array(
+	    'name'     => 'mod_agora',
+	    'fullpath' => '/mod/agora/prueba.js',
+	    'requires' => array('base','io', 'json-parse', 'attribute','node','gallery-checkboxgroups' ,'json-stringify','stylesheet'),
+  
+	);
 
-        $mform = $this->_form;
+	$PAGE->requires->js_init_call('M.mod_agora.init', array(), false, $jsmodule);
+        
+	$mform = $this->_form;
+	$agorasettings = get_config('agora');
 	
         //-------------------------------------------------------------------------------
         // Adding the "general" fieldset, where all the common settings are showed
@@ -84,6 +94,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	 
 	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
 	 $mform->addElement('text', 'name', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
+	 $mform->addElement('text', 'extension', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'extensionRecurso'));	 	
 	$swf = 	'<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/swfobject/swfobject.js"></script>';
 	 $mform->addElement('static', 'swf', '', $swf);
 
@@ -98,8 +109,11 @@ class mod_agora_mod_form extends moodleform_mod {
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
         $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
+	//URl del servidor de agora
 	$mform->addElement('text', 'agora_url', 'Direccion agora', 
-			array('size'=>'64','id'=>'campo_busqueda','value'=> $CGF->'urlAgora'));	
+			array('size'=>'64','id'=>'urlServidor', 'value' => $agorasettings->urlServidor));
+	$mform->setType('agora_url', PARAM_TEXT);
+	 $mform->setDefault('agora_url', $CFG->urlServidor);	
         // Adding the standard "intro" and "introformat" fields
 	
         $this->add_intro_editor();
@@ -107,7 +121,7 @@ class mod_agora_mod_form extends moodleform_mod {
         //-------------------------------------------------------------------------------
         // Adding the rest of agora settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
-        $mform->addElement('static', 'label1', 'newmodulesetting1', 'Your agora fields go here. Replace me!');
+       
 
         $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
         $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');

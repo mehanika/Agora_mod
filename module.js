@@ -1,4 +1,7 @@
-YUI().use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
+YUI({
+    //Last Gallery Build of this module
+    gallery: 'gallery-2012.05.16-20-37'
+}).use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
     function(Y) {
 
 	var urlSeleccionada = false;
@@ -270,12 +273,34 @@ function abrirLightBoxT (o,extension)
 						
 		}else{
 			resultado_busqueda.setStyle("display", "");
+			//new Y.AtMostOneCheckboxGroup('.idRecurso');
 			new Y.AtMostOneCheckboxGroup('.idRecurso');
 		
 		}
 	}
 
 
+	function mostrarDetalleRecursoSeleccionado()
+	{
+		var tabla = Y.Node.create('<table id="detalleRecurso" ></table>');
+		//fila de nombre del recurso		
+		var filaNombre = Y.Node.create('<tr><td>Nombre</td></tr>');
+		var nombreRecurso = Y.Node.create('<td></td>');
+		nombreRecurso.setHTML("prueba");
+		filaNombre.append(nombreRecurso);
+		//fila de descripcion
+		var filaDescripcion = Y.Node.create('<tr><td>Descripcion</td></tr>');
+		var descripcionRecurso = Y.Node.create('<td></td>');
+		descripcionRecurso.setHTML("Descripcion");	
+		filaDescripcion.append(descripcionRecurso);		
+		
+		//Agrega todas las filas la tabla	
+		tabla.append(filaNombre);	
+		
+		//Muestra la tabla
+		var resultado_busqueda = Y.one("#resultado_busqueda");
+		resultado_busqueda.setHTML(tabla);
+	}
 
 
 	function mostrarTablaResultados(recursos)
@@ -360,7 +385,7 @@ resultado_busqueda.set("innerHTML", text);
 
 	}
 
-
+       
 	
 	
         var handleStart = function(id, a) {
@@ -444,7 +469,8 @@ resultado_busqueda.set("innerHTML", text);
 		var titulo =  Y.one("#tituloRecurso");
 		
 		titulo.set("value",tituloRecursoSeleccionado);
-		
+	
+		mostrarDetalleRecursoSeleccionado();
 		closebox();
 
 		return false;
