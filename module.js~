@@ -1,5 +1,6 @@
 YUI({
-    //Last Gallery Build of this module    gallery: 'gallery-2012.05.16-20-37'
+    //Last Gallery Build of this module
+    gallery: 'gallery-2012.05.16-20-37'
 }).use("io", "json-parse", "attribute","node",'gallery-checkboxgroups' ,'json-stringify','stylesheet',
     function(Y) {
 

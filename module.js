@@ -479,11 +479,7 @@ resultado_busqueda.set("innerHTML", text);
 	
 
 
-	function mostrarDellaRecursoSeleccionado()
-	{
-		var tabla = Y.Node.create("<table></table>");
-		Y.one("#detalleRecurso").appendChild(tabla);
-	}
+	
 
         //add the click handler to the Load button.
         Y.on("click", handleClick, "#boton_buscar");
