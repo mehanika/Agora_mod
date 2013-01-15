@@ -13,7 +13,8 @@ M.mod_agora.init = function(Y) {
 	var urlSeleccionada = false;
 	var tituloRecursoSeleccionado = false;
 	var idSeleccionada = "";
-
+        var extensionSeleccionada ="";
+        var idRecursoSeleccionado = "";
 			
 	
 
@@ -172,6 +173,8 @@ function abrirLightBoxT (o,extension)
 
 				urlSeleccionada = url;
 		 		tituloRecursoSeleccionado = titulo;
+                                extensionSeleccionada = extension;
+                                
 				enlaceSeleccionado.onclick = function() {return false;};
 				return false;
 			}else if(extension == "swf")
@@ -188,6 +191,7 @@ function abrirLightBoxT (o,extension)
 				idSeleccionada = id;
 				urlSeleccionada = url;
 		 		tituloRecursoSeleccionado = titulo;
+                                extensionSeleccionada = "swf"
 
 				 mostrarSWF(url,titulo);	
 				openboxSWF(titulo,url);
@@ -202,6 +206,13 @@ function abrirLightBoxT (o,extension)
 		var resultado_busqueda = Y.one("#resultado_busqueda");
 			var tablaResultados = mostrarTablaResultados(recursos);
 			resultado_busqueda.setHTML(tablaResultados);
+                        
+                        var botonAceptar = Y.Node.create('<input type="button" value= "Aceptar recurso"/>');
+                         botonAceptar.on('click', obtenerDetallesRecurso);
+                        var divAceptar = Y.Node.create('<div id="acRecurso"></div>');
+                        divAceptar.append(botonAceptar);
+                        
+                        resultado_busqueda.append(divAceptar);
 
 		if(recursos.length == 0 )
 		{
@@ -216,6 +227,12 @@ function abrirLightBoxT (o,extension)
 		
 		}
 	}
+        
+        
+        function obtenerDetallesRecurso()
+        {
+            ostrarDetalleRecursoSeleccionado();
+        }
 
 
 	function mostrarDetalleRecursoSeleccionado()
@@ -236,7 +253,8 @@ function abrirLightBoxT (o,extension)
 		tabla.append(filaNombre);	
 		
 		//Botones de visualizacion
-		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"><input id="cancel" type="button" name="cancelar" value="Cancelar"></div>');
+		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"/><input id="cancel" type="button" name="cancelar" value="Cancelar"/\n\
+    ></div>');
 	        //var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
 		//var cancelar = Y.Node.create('<input type="button" value="Cancelar"/>>');
 		//opciones.append(visualizar);
@@ -269,6 +287,7 @@ function abrirLightBoxT (o,extension)
 function obtenerFila(recurso)
 {
    var fila = Y.Node.create('<tr></tr>');
+   
    var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
   var columnaImagen =Y.Node.create( '<td><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></td>');
 
@@ -339,7 +358,7 @@ function crearEnlace(recurso)
 
       
 
-	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://smile.esi.uclm.es/agora/recurso/ajax/buscar/?cadena=";
+	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://sel.uady.mx/agora/recurso/ajax/buscar/?cadena=";
 
 	//	/agora/recurso/ajax/buscar/?recueperar="
        
@@ -389,6 +408,23 @@ function crearEnlace(recurso)
 	
 	function seleccionarUnChecbox(o)
 	{
+            var checkbox = o.currentTarget;
+            var seleccionado = checkbox.get("checked");
+            if(seleccionado)
+            {
+                if(idRecursoSeleccionado!="")
+                  {
+                      var checboxAnterior = Y.one('#check_'+idRecursoSeleccionado);
+                      checboxAnterior.set('checked',false);
+                  }
+                
+                var idRecurso = checkbox.get('value');
+                alert(idRecurso);
+                idRecursoSeleccionado = idRecurso;
+                
+               
+            }
+            
 	}
 
 	
