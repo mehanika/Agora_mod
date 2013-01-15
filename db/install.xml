@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/agora/db" VERSION="20121005" COMMENT="XMLDB file for Moodle mod/agora"
+<XMLDB PATH="mod/agora/db" VERSION="20130115" COMMENT="XMLDB file for Moodle mod/agora"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -13,7 +13,8 @@
         <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated" NEXT="url_recurso"/>
-        <FIELD NAME="url_recurso" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Url del objeto de aprendizaje que se encuentra en la plataforma agora" PREVIOUS="timemodified"/>
+        <FIELD NAME="url_recurso" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Url del objeto de aprendizaje que se encuentra en la plataforma agora" PREVIOUS="timemodified" NEXT="extension"/>
+        <FIELD NAME="extension" TYPE="text" NOTNULL="false" SEQUENCE="false" PREVIOUS="url_recurso"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

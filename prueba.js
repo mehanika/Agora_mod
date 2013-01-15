@@ -156,7 +156,7 @@ function abrirLightBoxT (o,extension)
 			//var enlaceSeleccionado = o.target; 
                         var id = enlaceSeleccionado.get("id"); 
 			
-			
+			extensionSeleccionada = extension;
 			
 			if(esExtensionValida(extension))
 			{
@@ -173,7 +173,7 @@ function abrirLightBoxT (o,extension)
 
 				urlSeleccionada = url;
 		 		tituloRecursoSeleccionado = titulo;
-                                extensionSeleccionada = extension;
+                                
                                 
 				enlaceSeleccionado.onclick = function() {return false;};
 				return false;
@@ -191,7 +191,7 @@ function abrirLightBoxT (o,extension)
 				idSeleccionada = id;
 				urlSeleccionada = url;
 		 		tituloRecursoSeleccionado = titulo;
-                                extensionSeleccionada = "swf"
+                               
 
 				 mostrarSWF(url,titulo);	
 				openboxSWF(titulo,url);
@@ -399,6 +399,11 @@ function crearEnlace(recurso)
 		
 		titulo.set("value",tituloRecursoSeleccionado);
 	
+        
+                //Estableciendo la extension del recurso
+                var extension = Y.one('#extensionRecurso');
+                extension.set('value',extensionSeleccionada);
+                
 		mostrarDetalleRecursoSeleccionado();
 		closebox();
 
@@ -419,7 +424,7 @@ function crearEnlace(recurso)
                   }
                 
                 var idRecurso = checkbox.get('value');
-                alert(idRecurso);
+                //alert(idRecurso);
                 idRecursoSeleccionado = idRecurso;
                 
                
