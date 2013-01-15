@@ -41,7 +41,7 @@ class mod_agora_mod_form extends moodleform_mod {
      */
     public function definition() {
 	global $PAGE,$CFG;
-	//$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
 	
 	$jsmodule = array(
 	    'name'     => 'mod_agora',
@@ -99,9 +99,8 @@ class mod_agora_mod_form extends moodleform_mod {
 	 $mform->addElement('static', 'swf', '', $swf);
 
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
-	$ps = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/procesadorBusquedas.js"></script>';
-	$mform->addElement('static', 'procesarBusqueda', '', $ps);
-        $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
+	
+        //$mform->addElement('static', 'hotpot_mod_form_js', '', $js);
 	$mform->addElement('static', 'resultado_busqueda', '', '<div id="resultado_busqueda" style="display:none;"></div>');
 	$mform->addElement('static', 'detalle_recurso', '', '<div id="detalleRecurso" ></div>');
 	$mform->addElement('static', 'lightbox', '', $lightbox);
@@ -124,7 +123,7 @@ class mod_agora_mod_form extends moodleform_mod {
        
 
         $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
-        $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
+       // $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
 
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules

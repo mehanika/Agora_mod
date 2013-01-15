@@ -148,7 +148,7 @@ YUI({
 
 	function agregarFuncionesLightBox(extension)
 	{
-	
+	/**
 	var abrirLightBox  = function(o)
 		{
 
@@ -204,7 +204,7 @@ YUI({
 	Y.delegate('click', abrirLightBox,'#t_resultadoBusqueda', 'tr td a.recursos');
 	Y.delegate('click', function(o){alert(o.target.get("value"));},'#t_resultadoBusqueda', 'tr td input.idRecurso');
 	
-	}
+	}*/
 	
 	
 
@@ -300,6 +300,7 @@ function abrirLightBoxT (o,extension)
 		//Muestra la tabla
 		var resultado_busqueda = Y.one("#resultado_busqueda");
 		resultado_busqueda.setHTML(tabla);
+		var opciones  = Y.Node.create('<div><button>Visualizar</button>Cancelar<button></button></div>');
 	}
 
 

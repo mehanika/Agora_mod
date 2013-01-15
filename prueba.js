@@ -88,6 +88,7 @@ M.mod_agora.init = function(Y) {
 
 			var content = document.getElementById('boxcontent');
 			var gframe  = document.getElementById('gframe');
+			Y.one('#preview').setStyle("display", "");
 			//gframe.src= newUrl;
 		//content.innerHTML = iframe;
 
@@ -103,6 +104,11 @@ M.mod_agora.init = function(Y) {
 			  
 			  return false;
 		}
+	
+	function mostrarSWF(ruta,nombre)
+	{
+		swfobject.embedSWF(ruta, "preview", "800", "300", "9.0.0");
+        }
 
 	function closebox()
 	{
@@ -204,8 +210,9 @@ function abrirLightBoxT (o,extension)
 						
 		}else{
 			resultado_busqueda.setStyle("display", "");
-			//new Y.AtMostOneCheckboxGroup('.idRecurso');
+			
 			new Y.AtMostOneCheckboxGroup('.idRecurso');
+
 		
 		}
 	}
@@ -228,9 +235,20 @@ function abrirLightBoxT (o,extension)
 		//Agrega todas las filas la tabla	
 		tabla.append(filaNombre);	
 		
+		//Botones de visualizacion
+		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"><input id="cancel" type="button" name="cancelar" value="Cancelar"></div>');
+	        //var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
+		//var cancelar = Y.Node.create('<input type="button" value="Cancelar"/>>');
+		//opciones.append(visualizar);
+		//opciones.append(cancelar);
 		//Muestra la tabla
+		
 		var resultado_busqueda = Y.one("#resultado_busqueda");
 		resultado_busqueda.setHTML(tabla);
+		resultado_busqueda.append(opciones);
+	
+
+
 	}
 
 
@@ -369,7 +387,9 @@ function crearEnlace(recurso)
 	}
 
 	
-
+	function seleccionarUnChecbox(o)
+	{
+	}
 
 	
 
@@ -377,6 +397,6 @@ function crearEnlace(recurso)
         Y.on("click", handleClick, "#boton_buscar");
 	Y.on("click",closebox,"#cancelar");
 	Y.on("click",aceptarRecurso,"#aceptarRecurso")
-
+	Y.on("click",seleccionarUnChecbox,'.idRecurso')
 
 }

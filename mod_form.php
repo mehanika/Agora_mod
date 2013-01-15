@@ -41,8 +41,8 @@ class mod_agora_mod_form extends moodleform_mod {
      */
     public function definition() {
 	global $PAGE,$CFG;
-	//$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
-	
+	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+	$PAGE->requires->js('/mod/agora/yui_gallery.js');
 	$jsmodule = array(
 	    'name'     => 'mod_agora',
 	    'fullpath' => '/mod/agora/prueba.js',
@@ -123,7 +123,7 @@ class mod_agora_mod_form extends moodleform_mod {
        
 
         $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
-        $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
+       // $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
 
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules

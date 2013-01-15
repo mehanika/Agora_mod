@@ -300,6 +300,7 @@ function abrirLightBoxT (o,extension)
 		//Muestra la tabla
 		var resultado_busqueda = Y.one("#resultado_busqueda");
 		resultado_busqueda.setHTML(tabla);
+		var opciones  = Y.Node.create('<div><button>Visualizar</button>Cancelar<button></button></div>');
 	}
 
 
@@ -479,11 +480,7 @@ resultado_busqueda.set("innerHTML", text);
 	
 
 
-	function mostrarDellaRecursoSeleccionado()
-	{
-		var tabla = Y.Node.create("<table></table>");
-		Y.one("#detalleRecurso").appendChild(tabla);
-	}
+	
 
         //add the click handler to the Load button.
         Y.on("click", handleClick, "#boton_buscar");
