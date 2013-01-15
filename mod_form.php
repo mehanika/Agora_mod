@@ -110,7 +110,7 @@ class mod_agora_mod_form extends moodleform_mod {
         $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
 	//URl del servidor de agora
 	$mform->addElement('text', 'agora_url', 'Direccion agora', 
-			array('size'=>'64','id'=>'urlServidor', 'value' => $agorasettings->urlServidor));
+			array('size'=>'64','id'=>'urlServidor'));
 	$mform->setType('agora_url', PARAM_TEXT);
 	 $mform->setDefault('agora_url', $CFG->urlServidor);	
         // Adding the standard "intro" and "introformat" fields

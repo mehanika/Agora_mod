@@ -58,7 +58,7 @@ $PAGE->set_url('/mod/agora/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($agora->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
-
+$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
 // other things you may want to set - remove if not needed
 //$PAGE->set_cacheable(false);
 //$PAGE->set_focuscontrol('some-html-id');
@@ -74,17 +74,36 @@ if ($agora->intro) { // Conditions to show the intro can change to look for own 
 // Replace the following lines with you own code
 echo $OUTPUT->heading($agora->name);
 
+
+
+
 echo $OUTPUT->container_start('recurso');
-	echo $OUTPUT->container_start('descarga');
+      echo $OUTPUT->container_start('descarga');
 		echo '<div class="buttons"><a href="'.$agora->url_recurso.'" id="descarga" target="_blank">Descargar documento</a></div>';
 	echo $OUTPUT->container_end();
+	$extension = $agora->extension;
+	if($extension == 'swf')
+	{
+	echo $OUTPUT->container_start('visualizacion');
+	echo '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
+        echo '\t<param name="movie" value="'.$agora->url_recurso.'" />';
+        //<!--[if !IE]>-->
+        echo '<object type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';
+        //<!--<![endif]-->
+          
+        //<!--[if !IE]>-->
+        echo '</object>';
+        ///<!--<![endif]-->
+      	echo '</object>';
+	echo $OUTPUT->container_end();
+	} 
+	else if( $$extension == 'doc' || $extension == 'ppt' || $extension == 'pdf')
+	{	
+
 	echo $OUTPUT->container_start('visualizacion');
 		echo '<div><iframe src="http://docs.google.com/viewer?url='.urlencode($agora->url_recurso).'&embedded=true" width="600" height="780" style="border: none;"></iframe></div>';
 	echo $OUTPUT->container_end();
-	echo $OUTPUT->container_start('url');
-		
-			 print_r($agorasettings);
-	echo $OUTPUT->container_end();
+	}	
 
 echo $OUTPUT->container_end();
 
