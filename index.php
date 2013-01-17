@@ -23,7 +23,7 @@
  *
  * @package    mod
  * @subpackage agora
- * @copyright  2011 Your Name
+ * @copyright  2011 Josue Eduardo Pech Ucan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

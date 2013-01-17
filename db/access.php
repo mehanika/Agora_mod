@@ -41,8 +41,8 @@
  * The variable name for the capability definitions array is $capabilities
  *
  * @package    mod
- * @subpackage newmodule
- * @copyright  2011 Your Name
+ * @subpackage agora
+ * @copyright  2011 Josue Eduardo Pech Ucan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

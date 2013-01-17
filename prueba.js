@@ -207,12 +207,14 @@ function abrirLightBoxT (o,extension)
 			var tablaResultados = mostrarTablaResultados(recursos);
 			resultado_busqueda.setHTML(tablaResultados);
                         
+                        //Creando boton para aceptar un recurso seleccionado
                         var botonAceptar = Y.Node.create('<input type="button" value= "Aceptar recurso"/>');
-                         botonAceptar.on('click', obtenerDetallesRecurso);
+                        botonAceptar.on('click', obtenerDetallesRecurso);
+                        // creando div para el boton
                         var divAceptar = Y.Node.create('<div id="acRecurso"></div>');
                         divAceptar.append(botonAceptar);
-                        
-                        resultado_busqueda.append(divAceptar);
+                        //Agregando el boton al div princial
+                        Y.one('#div_agora').append(divAceptar);
 
 		if(recursos.length == 0 )
 		{
