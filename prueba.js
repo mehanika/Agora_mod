@@ -404,11 +404,25 @@ function crearEnlace(recurso)
                 var extension = Y.one('#extensionRecurso');
                 extension.set('value',extensionSeleccionada);
                 
+                esconderCamposBusqueda();
 		mostrarDetalleRecursoSeleccionado();
 		closebox();
 
 		return false;
 	}
+        
+        function esconderCamposBusqueda()
+        {
+            Y.one('#campo_busqueda').setStyle("display", "none");
+            Y.one('#urlServidor').setStyle("display", "none");
+        }
+        
+        
+        function mostrarCamposBusqueda()
+        {
+            Y.one('#campo_busqueda').setStyle("display", "");
+            Y.one('#urlServidor').setStyle("display", "");
+        }
 
 	
 	function seleccionarUnChecbox(o)

@@ -50,7 +50,7 @@ if ($id) {
 require_login($course, true, $cm);
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
 
-add_to_log($course->id, 'agora', 'view', "view.php?id={$cm->id}", $agora->name, $cm->id);
+add_to_log($course->id, 'agora', 'view', "view.php?id={$cm->id}", $agora->id, $cm->id);
 
 /// Print the page header
 
@@ -81,23 +81,25 @@ echo $OUTPUT->container_start('recurso');
       echo $OUTPUT->container_start('descarga');
 		echo '<div class="buttons"><a href="'.$agora->url_recurso.'" id="descarga" target="_blank">Descargar documento</a></div>';
 	echo $OUTPUT->container_end();
+	//obteniendo la extension del recurso	
 	$extension = $agora->extension;
+	
 	if($extension == 'swf')
 	{
-	echo $OUTPUT->container_start('visualizacion');
-	echo '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
-        echo '\t<param name="movie" value="'.$agora->url_recurso.'" />';
-        //<!--[if !IE]>-->
-        echo '<object type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';
-        //<!--<![endif]-->
-          
-        //<!--[if !IE]>-->
-        echo '</object>';
-        ///<!--<![endif]-->
-      	echo '</object>';
-	echo $OUTPUT->container_end();
+		echo $OUTPUT->container_start('visualizacion');
+			echo '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
+				echo '\t<param name="movie" value="'.$agora->url_recurso.'" />';
+			//<!--[if !IE]>-->
+				echo '<object type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';
+			//<!--<![endif]-->
+			  
+			//<!--[if !IE]>-->
+				echo '</object>';
+			///<!--<![endif]-->
+		      	echo '</object>';
+		echo $OUTPUT->container_end();
 	} 
-	else if( $$extension == 'doc' || $extension == 'ppt' || $extension == 'pdf')
+	else if( $extension == 'doc' || $extension == 'ppt' || $extension == 'pdf')
 	{	
 
 	echo $OUTPUT->container_start('visualizacion');
