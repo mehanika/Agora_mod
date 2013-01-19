@@ -42,7 +42,6 @@ class mod_agora_mod_form extends moodleform_mod {
     public function definition() {
 	global $PAGE,$CFG;
 	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
-	$PAGE->requires->js('/mod/agora/yui_gallery.js');
 	$jsmodule = array(
 	    'name'     => 'mod_agora',
 	    'fullpath' => '/mod/agora/prueba.js',
@@ -101,7 +100,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
 	
         //$mform->addElement('static', 'hotpot_mod_form_js', '', $js);
-	$mform->addElement('static', 'resultado_busqueda', '', '<span id="div_agora"><div id="resultado_busqueda" style="display:none;"></div></span>');
+	$mform->addElement('static', 'resultado_busqueda', '', '<span id="div_agora"><div id="resultado_busqueda" style="display:none;"></div><span id="aceptarRecursoSelect"></span></span>');
 	$mform->addElement('static', 'detalle_recurso', '', '<div id="detalleRecurso" ></div>');
 	$mform->addElement('static', 'lightbox', '', $lightbox);
 	

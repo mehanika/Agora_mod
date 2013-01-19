@@ -204,17 +204,20 @@ function abrirLightBoxT (o,extension)
 	function mostrarResultadoT_Busqueda(recursos)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
+                
 			var tablaResultados = mostrarTablaResultados(recursos);
 			resultado_busqueda.setHTML(tablaResultados);
                         
+                        //Checando
+                        
                         //Creando boton para aceptar un recurso seleccionado
-                        var botonAceptar = Y.Node.create('<input type="button" value= "Aceptar recurso"/>');
-                        botonAceptar.on('click', obtenerDetallesRecurso);
+                        var botonAceptar = Y.Node.create('<input type="button" id="aceptarRecursoCheck" value= "Aceptar recurso"/>');
+                        botonAceptar.on('click', aceptarRecurso);
                         // creando div para el boton
                         var divAceptar = Y.Node.create('<div id="acRecurso"></div>');
                         divAceptar.append(botonAceptar);
                         //Agregando el boton al div princial
-                        Y.one('#div_agora').append(divAceptar);
+                        Y.one('#aceptarRecursoSelect').setHTML(divAceptar);
 
 		if(recursos.length == 0 )
 		{
@@ -224,7 +227,7 @@ function abrirLightBoxT (o,extension)
 		}else{
 			resultado_busqueda.setStyle("display", "");
 			
-			new Y.AtMostOneCheckboxGroup('.idRecurso');
+			//new Y.AtMostOneCheckboxGroup('.idRecurso');
 
 		
 		}
@@ -237,9 +240,11 @@ function abrirLightBoxT (o,extension)
         }
 
 
-	function mostrarDetalleRecursoSeleccionado()
+	function mostrarDetalleRecursoSeleccionado(idSeleccionada)
 	{
-		var tabla = Y.Node.create('<table id="detalleRecurso" ></table>');
+            
+               // alert(idSeleccionada);
+		var tabla = Y.Node.create('<table id="t_detalleRecurso" ></table>');
 		//fila de nombre del recurso		
 		var filaNombre = Y.Node.create('<tr><td>Nombre</td></tr>');
 		var nombreRecurso = Y.Node.create('<td></td>');
@@ -255,12 +260,12 @@ function abrirLightBoxT (o,extension)
 		tabla.append(filaNombre);	
 		
 		//Botones de visualizacion
-		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"/><input id="cancel" type="button" name="cancelar" value="Cancelar"/\n\
-    ></div>');
+		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"/></div>');
 	        //var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
-		//var cancelar = Y.Node.create('<input type="button" value="Cancelar"/>>');
+		var cancelar = Y.Node.create('<input type="button" value="Cancelar"/>');
+                cancelar.on('click',mostrarCamposBusqueda);
 		//opciones.append(visualizar);
-		//opciones.append(cancelar);
+		opciones.append(cancelar);
 		//Muestra la tabla
 		
 		var resultado_busqueda = Y.one("#resultado_busqueda");
@@ -334,7 +339,7 @@ function crearEnlace(recurso)
             var recursos = Y.JSON.parse(o.responseText);
 
             mostrarResultadoT_Busqueda(recursos);
-	    agregarFuncionesLightBox();
+	   
             
         }
 
@@ -361,34 +366,63 @@ function crearEnlace(recurso)
       
 
 	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://sel.uady.mx/agora/recurso/ajax/buscar/?cadena=";
-
-	//	/agora/recurso/ajax/buscar/?recueperar="
+        var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
+        var webServiceAgora = '/agora/recurso/ajax/buscar/?cadena='
        
 	 var handleClick = function(o) {
+                //alert(urlProxy);
 		var palabraBuscar = Y.one("#campo_busqueda").get("value");
-		 var e_palabraBuscar = escape(palabraBuscar);
+		var e_palabraBuscar = escape(palabraBuscar);
+                var direccionServidor = Y.one('#urlServidor').get('value'); 
 		var urlBusqueda = url+e_palabraBuscar;
+            
+                        
+            
             
 	    		if(palabraBuscar.length <= 0)
 			{
 				
 				 alert('Campo vacio');				
-			}else
+			}
+                        else if(!esURLValida(direccionServidor))
+                        {
+                            alert('Direccion del servidor no valida');	
+                        }
+                        else
 			{
-
+                            
+                            
+                                var urlBusqueda = obtenerURLBusqueda(palabraBuscar,direccionServidor);
+                               
 				Y.io.header('X-Requested-With');
 			    var obj = Y.io(urlBusqueda,cfg);
 			}
 			
 			
 		}
+                
+         function obtenerURLBusqueda(palabraBuscar,direccionServidor)
+         {
+               var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
+                var webServiceAgora = '/agora/recurso/ajax/buscar/?cadena='
+                var urlServidor = new String(direccionServidor);
+                       if(urlServidor.charAt(urlServidor.length) == '\\')
+                         {
+                                 alert('termina con slash')
+                         }
+                         var e_palabraBuscar = escape(palabraBuscar);
+                         
+                         
+                  return  urlProxy+direccionServidor+webServiceAgora+e_palabraBuscar;       
+                       
+         }
 
 	function aceptarRecurso(o)
 	{
 
 		o.preventDefault();
 		var checkboxSeleccionado = Y.one("#check_"+idSeleccionada);
-		checkboxSeleccionado.set("checked","true");	
+		//checkboxSeleccionado.set("checked","true");	
 		
 
 		//Estableciendo la url del recurso		
@@ -407,7 +441,7 @@ function crearEnlace(recurso)
                 extension.set('value',extensionSeleccionada);
                 
                 esconderCamposBusqueda();
-		mostrarDetalleRecursoSeleccionado();
+		mostrarDetalleRecursoSeleccionado(idRecursoSeleccionado);
 		closebox();
 
 		return false;
@@ -415,15 +449,37 @@ function crearEnlace(recurso)
         
         function esconderCamposBusqueda()
         {
-            Y.one('#campo_busqueda').setStyle("display", "none");
-            Y.one('#urlServidor').setStyle("display", "none");
+            Y.one('#fitem_campo_busqueda').setStyle("display", "none");
+            Y.one('#fitem_urlServidor').setStyle("display", "none");
+            Y.one('#acRecurso').setStyle("display", "none");
+            Y.one('#fitem_boton_buscar').setStyle("display", "none");
+            Y.one('#campo_busqueda').set('value','');
+           
         }
         
         
         function mostrarCamposBusqueda()
         {
-            Y.one('#campo_busqueda').setStyle("display", "");
-            Y.one('#urlServidor').setStyle("display", "");
+            Y.one('#fitem_campo_busqueda').setStyle("display", "");
+            Y.one('#fitem_urlServidor').setStyle("display", "");
+            Y.one('#acRecurso').remove();
+            Y.one('#fitem_boton_buscar').setStyle("display", "");
+            Y.one('#resultado_busqueda').set("innerHTML", "");
+        }
+        
+        function esURLValida(url) 
+        {
+        
+            var RegExp = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)|)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+            if(RegExp.test(url))
+            {
+
+                return true;
+            }
+            else{
+                return false;
+            }
         }
 
 	
@@ -443,7 +499,7 @@ function crearEnlace(recurso)
                 //alert(idRecurso);
                 idRecursoSeleccionado = idRecurso;
                 
-               
+               //alert( idRecursoSeleccionado);
             }
             
 	}
@@ -453,7 +509,7 @@ function crearEnlace(recurso)
         //add the click handler to the Load button.
         Y.on("click", handleClick, "#boton_buscar");
 	Y.on("click",closebox,"#cancelar");
-	Y.on("click",aceptarRecurso,"#aceptarRecurso")
-	Y.on("click",seleccionarUnChecbox,'.idRecurso')
-
+	Y.on("click",aceptarRecurso,"#aceptarRecurso");
+	Y.delegate("click",seleccionarUnChecbox,'#resultado_busqueda', 'input.idRecurso');
+       
 }
