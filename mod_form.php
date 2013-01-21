@@ -42,10 +42,11 @@ class mod_agora_mod_form extends moodleform_mod {
     public function definition() {
 	global $PAGE,$CFG;
 	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+        
 	$jsmodule = array(
 	    'name'     => 'mod_agora',
 	    'fullpath' => '/mod/agora/prueba.js',
-	    'requires' => array('base','io', 'json-parse', 'attribute','node','gallery-checkboxgroups' ,'json-stringify','stylesheet'),
+	    'requires' => array('base','io', 'json-parse', 'attribute','node' ,'json-stringify','stylesheet'),
   
 	);
 
@@ -72,7 +73,7 @@ class mod_agora_mod_form extends moodleform_mod {
   <div id="boxtitle"></div>
 	
 
-	<div id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></div>
+	<div id="preview"><iframe id="gframe"></iframe></div>
 		<div class="buttons">
     <a id="descarga" target="_blank">Descargar documento</a>
     <a href="#" class="negative"  id="cancelar">

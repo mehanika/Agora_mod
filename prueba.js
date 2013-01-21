@@ -108,7 +108,7 @@ M.mod_agora.init = function(Y) {
 	
 	function mostrarSWF(ruta,nombre)
 	{
-		swfobject.embedSWF(ruta, "preview", "800", "300", "9.0.0");
+		swfobject.embedSWF(ruta, "preview", "100%", "80%", "9.0.0");
         }
 
 	function closebox()
@@ -124,7 +124,7 @@ M.mod_agora.init = function(Y) {
 	
 	function restablecerLightBox()
 	{
-		 var preview = Y.Node.create('<div id="preview"><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe></div>');
+		 var preview = Y.Node.create('<div id="preview"><iframe id="gframe" scrolling="auto"></iframe></div>');
 	   var box = Y.one('#box');
 	   var titulo = Y.one('#boxtitle');
 	   box.insert(preview,2);
