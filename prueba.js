@@ -16,8 +16,11 @@ M.mod_agora.init = function(Y) {
         var extensionSeleccionada ="";
         var idRecursoSeleccionado = "";
 			
-	
-
+/*
+ *@param {Integer} id
+ *@para {Float}	leve
+ *	
+ */     
 	function gradient(id, level)
 	{
 		var box = document.getElementById(id);
@@ -41,7 +44,13 @@ M.mod_agora.init = function(Y) {
 		}
 	}
 
-
+/*
+ *Funcion para abrir la caja de visualizacion de documentos
+ *
+ *@param {String} titulo
+ *@param {String} _url
+ *
+ */
 
 	function openbox(titulo,_url)
 	{
@@ -73,16 +82,27 @@ M.mod_agora.init = function(Y) {
 			  
 			  return false;
 		}
+                
+/*
+ *Función para abrir la caja de visualizacion de archivos .swf
+ *
+ *@param {String}titulo
+ *@param {String} _url
+*/        
 
-	function openboxSWF(titulo,_url)
-	{
-			var fadin = 1;
-		  	var box = document.getElementById('box'); 
-		  	document.getElementById('shadowing').style.display='block';
+function openboxSWF(titulo,_url)
+{
+	var fadin = 1;
+	
+        var box = document.getElementById('box'); 
+	
+        document.getElementById('shadowing').style.display='block';
 
-		  	var btitle = document.getElementById('boxtitle');
-		  	btitle.innerHTML = titulo;
-		  	var url = encodeURIComponent(_url);
+	var btitle = document.getElementById('boxtitle');
+	
+        btitle.innerHTML = titulo;
+		  	
+        var url = encodeURIComponent(_url);
 			var descarga = document.getElementById('descarga');
 			descarga.href=_url;
 			//var newUrl = 'http://docs.google.com/viewer?url='+url+'&embedded=true';
@@ -105,11 +125,21 @@ M.mod_agora.init = function(Y) {
 			  
 			  return false;
 		}
-	
+/*
+ *Despliga el archivo .swf para que pueda ser visualizado
+ * 
+ * @param {String} ruta
+ * @param {String} nombre
+ */	
 	function mostrarSWF(ruta,nombre)
 	{
 		swfobject.embedSWF(ruta, "preview", "100%", "80%", "9.0.0");
         }
+/*
+ *Cierra la caja de visualizacion
+ * 
+ * 
+ */        
 
 	function closebox()
 	{
@@ -117,10 +147,12 @@ M.mod_agora.init = function(Y) {
 	   document.getElementById('shadowing').style.display='none';
 	   urlSeleccionada = false;
 	   tituloRecursoSeleccionado = false;
-	    restablecerLightBox();
+	   restablecerLightBox();
 	       
 	}
-
+/*
+ * Restablece la caja de visualizacion 
+ */
 	
 	function restablecerLightBox()
 	{
@@ -145,14 +177,20 @@ M.mod_agora.init = function(Y) {
 		}
 	}
 
+/*
+ *Abre la caja de visualizacion de documentos
+ *
+ * 
+ *   
+ */
 
-function abrirLightBoxT (o,extension)
-		{
+    function abrirLightBoxT (enlaceRecurso,extension,idRecurso,tituloRecurso,urlRecurso)
+    {
 
 			
 			
 			
-			var enlaceSeleccionado =  o.currentTarget
+			var enlaceSeleccionado =  enlaceRecurso.currentTarget
 			//var enlaceSeleccionado = o.target; 
                         var id = enlaceSeleccionado.get("id"); 
 			
@@ -160,19 +198,19 @@ function abrirLightBoxT (o,extension)
 			
 			if(esExtensionValida(extension))
 			{
-				o.preventDefault();
+				enlaceRecurso.preventDefault();
 			
 				var url = enlaceSeleccionado.get("href");						
 
 				var titulo = enlaceSeleccionado.get("innerHTML");
 				
-				idSeleccionada = id;
+				idSeleccionada = idRecurso;
 				
-				openbox(titulo,url);
-				Y.one("#aceptarRecurso").set("value",id);
+				openbox(tituloRecurso,urlRecurso);
+				Y.one("#aceptarRecurso").set("value",idRecurso);
 
-				urlSeleccionada = url;
-		 		tituloRecursoSeleccionado = titulo;
+				urlSeleccionada = urlRecurso;
+		 		tituloRecursoSeleccionado = tituloRecurso;
                                 
                                 
 				enlaceSeleccionado.onclick = function() {return false;};
@@ -181,21 +219,21 @@ function abrirLightBoxT (o,extension)
 			{
 			 
 
-			  o.preventDefault();
+			  enlaceRecurso.preventDefault();
 			
 				var url = enlaceSeleccionado.get("href");						
 
 				var titulo = enlaceSeleccionado.get("innerHTML");
 				var id = enlaceSeleccionado.get("id");
 				
-				idSeleccionada = id;
-				urlSeleccionada = url;
-		 		tituloRecursoSeleccionado = titulo;
+				idSeleccionada = idRecurso;
+				urlSeleccionada = urlRecurso;
+		 		tituloRecursoSeleccionado = tituloRecurso;
                                
 
-				 mostrarSWF(url,titulo);	
-				openboxSWF(titulo,url);
-				Y.one("#aceptarRecurso").set("value",id);
+				 mostrarSWF(urlRecurso,tituloRecurso);	
+				openboxSWF(tituloRecurso,urlRecurso);
+				Y.one("#aceptarRecurso").set("value",idRecurso);
 	
 		   	  
 			}
@@ -296,7 +334,7 @@ function obtenerFila(recurso)
    var fila = Y.Node.create('<tr></tr>');
    
    var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
-  var columnaImagen =Y.Node.create( '<td><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></td>');
+  var columnaImagen = crearColumnaImagen(recurso);
 
 var enlace = crearEnlace(recurso);
 var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
@@ -311,17 +349,38 @@ var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <s
 	return fila;
 }
 
+/*
+ * Crea un enlace para mostrar los recursos encontrados
+ * @param {Object} recurso
+ * 
+ */
 function crearEnlace(recurso)
 	{
 	var enlace  = Y.Node.create('<a></a>');
-	enlace.set("href", recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso);
+        var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
+	enlace.set("href", urlRecurso);
 	enlace.set("ext", recurso.extension);
 	var extension = recurso.extension;
 	enlace.set("id",recurso.id_recurso);
 	enlace.set("innerHTML", recurso.titulo);
-	enlace.on("click",abrirLightBoxT,null,extension);
+	enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
 	return enlace;	
 	}
+        
+        
+        function crearColumnaImagen(recurso)
+        {
+            var enlace  = Y.Node.create('<a><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></a>');
+            var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
+	enlace.set("href", urlRecurso);
+	enlace.set("ext", recurso.extension);
+	var extension = recurso.extension;
+	enlace.set("id",recurso.id_recurso);
+	enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
+        var columnaImagen = Y.Node.create('<td></td>');
+        columnaImagen.setHTML(enlace);
+	return columnaImagen ;	
+        }
 
 
   var handleStart = function(id, a) {

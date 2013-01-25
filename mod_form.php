@@ -122,7 +122,7 @@ class mod_agora_mod_form extends moodleform_mod {
         // or adding more fieldsets ('header' elements) if needed for better logic
        
 
-        $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
+      //  $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
        // $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
 
         //-------------------------------------------------------------------------------
