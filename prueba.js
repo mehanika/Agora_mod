@@ -180,8 +180,11 @@ function openboxSWF(titulo,_url)
 /*
  *Abre la caja de visualizacion de documentos
  *
- * 
- *   
+ * @param {Object} enlaceRecurso
+ * @param {String} extension
+ * @param {Integer} idRecurso
+ * @param {String} tituloReccurso
+ * @param {String} urlRecurso 
  */
 
     function abrirLightBoxT (enlaceRecurso,extension,idRecurso,tituloRecurso,urlRecurso)
@@ -272,31 +275,49 @@ function openboxSWF(titulo,_url)
 	}
         
         
-        function obtenerDetallesRecurso()
-        {
-            ostrarDetalleRecursoSeleccionado();
-        }
+      
 
-
-	function mostrarDetalleRecursoSeleccionado(idSeleccionada)
-	{
+function mostrarDetalleRecursoSeleccionado(recursoSeleccionado)
+{
+    
+    
+                //var tamañoArreglo = recursoSeleccionado.length;
+                //
+               // obtenerDetalleRecuro(idSeleccionada);
+               var tamanoArreglo = recursoSeleccionado.length;
+            
             
                // alert(idSeleccionada);
 		var tabla = Y.Node.create('<table id="t_detalleRecurso" ></table>');
 		//fila de nombre del recurso		
-		var filaNombre = Y.Node.create('<tr><td>Nombre</td></tr>');
+		var filaNombre = Y.Node.create('<tr><td>Titulo</td></tr>');
 		var nombreRecurso = Y.Node.create('<td></td>');
-		nombreRecurso.setHTML("prueba");
+		nombreRecurso.setHTML(recursoSeleccionado[2].title);
 		filaNombre.append(nombreRecurso);
-		//fila de descripcion
+		tabla.append(filaNombre);
+                
+                
+                //fila de descripcion
 		var filaDescripcion = Y.Node.create('<tr><td>Descripcion</td></tr>');
 		var descripcionRecurso = Y.Node.create('<td></td>');
-		descripcionRecurso.setHTML("Descripcion");	
+                var descripcion = recursoSeleccionado[56].description;
+                descripcionRecurso.set("innerHTML",descripcion);
 		filaDescripcion.append(descripcionRecurso);		
+		tabla.append(filaDescripcion);
+                
 		
-		//Agrega todas las filas la tabla	
-		tabla.append(filaNombre);	
+                //Agregando fila de disciplina
+                var filaDisciplina = Y.Node.create('<tr><td>Disciplina</td></tr>');
+                var disciplinaRecurso = Y.Node.create('<td></td>');
+                descripcionRecurso.set("innerHTML",recursoSeleccionado[58].discipline);
+                tabla.append(filaDisciplina);
+                
+                //Agrega todas las filas la tabla	
+			
 		
+                
+                
+                
 		//Botones de visualizacion
 		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"/></div>');
 	        //var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
@@ -312,18 +333,55 @@ function openboxSWF(titulo,_url)
 	
 
 
-	}
+}
 
 
-	function mostrarTablaResultados(recursos)
+function obtenerDetalleRecuro(idRecurso)
 {
-		var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
-		for(var i = 0; i < recursos.length; i++) {
-		var recurso = recursos[i];
+    //obtiene la url del servidor
+    var direccionServidor = Y.one('#urlServidor').get('value');
+    
+    //obtiene la url para hacer la peticion de los datos del recurso
+    var urlDetalleRecurso =  obtenerURLDetalleRecuros(idRecurso, direccionServidor);
+     
+    var exitoPeticion = function(id, o, a){
+         
+         
+      Y.log("Respuesta "+o.responseText);   
+      var recurso = Y.JSON.parse(o.responseText);
+      mostrarDetalleRecursoSeleccionado(recurso);
+         
+     };
+     
+     var configuracionPeticion = {
+            method: "GET",
+          
+            on: {
+                
+                
+                success: exitoPeticion,
+                failure: function(o){ alert('Error al obtener los datos del recurso');}
+            }
+        };
+     
+     Y.io.header('X-Requested-With');
+     var obj = Y.io(urlDetalleRecurso,configuracionPeticion);
+}
+
+function mostrarTablaResultados(recursos)
+{
+    var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
+    
+    for(var i = 0; i < recursos.length; i++) 
+       {
+    
+            var recurso = recursos[i];
 		
-			var filaActual = obtenerFila(recurso);
-			tabla.append(filaActual);
-		}
+            var filaActual = obtenerFila(recurso);
+	
+            tabla.append(filaActual);
+        
+       }
 
 	return tabla;
 }
@@ -331,22 +389,29 @@ function openboxSWF(titulo,_url)
 
 function obtenerFila(recurso)
 {
-   var fila = Y.Node.create('<tr></tr>');
-   
-   var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
-  var columnaImagen = crearColumnaImagen(recurso);
+    var fila = Y.Node.create('<tr></tr>');
+    
+    var columnaCheckbox = Y.Node.create('<td><input type="checkbox" class="idRecurso" value="'+recurso.id_recurso+'" 		id="check_'+recurso.id_recurso+'"/></td>');
+    
+    var columnaImagen = crearColumnaImagen(recurso);
+    
+    var enlace = crearEnlace(recurso);
+    
+    var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
+    
+    var columnaRecurso = Y.Node.create('<td></td>');
+    
+    columnaRecurso.append(enlace);
+  
+    columnaRecurso.append(descripcion); 
 
-var enlace = crearEnlace(recurso);
-var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
- var columnaRecurso = Y.Node.create('<td></td>');
-  columnaRecurso.append(enlace);
-  columnaRecurso.append(descripcion); 
-
-	fila.append(columnaCheckbox);
-	fila.append(columnaImagen);
-	fila.append(columnaRecurso);
-
-	return fila;
+    fila.append(columnaCheckbox);
+    
+    fila.append(columnaImagen);
+    
+    fila.append(columnaRecurso);
+    
+    return fila;
 }
 
 /*
@@ -355,42 +420,61 @@ var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <s
  * 
  */
 function crearEnlace(recurso)
-	{
-	var enlace  = Y.Node.create('<a></a>');
-        var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
-	enlace.set("href", urlRecurso);
-	enlace.set("ext", recurso.extension);
-	var extension = recurso.extension;
-	enlace.set("id",recurso.id_recurso);
-	enlace.set("innerHTML", recurso.titulo);
-	enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
-	return enlace;	
-	}
+{
+    var enlace  = Y.Node.create('<a></a>');
+    
+    var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
+    
+    enlace.set("href", urlRecurso);
+    
+    enlace.set("ext", recurso.extension);
+    
+    var extension = recurso.extension;
+    
+    enlace.set("id",recurso.id_recurso);
+    
+    enlace.set("innerHTML", recurso.titulo);
+
+    enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
+    
+    return enlace;	
+}
         
         
-        function crearColumnaImagen(recurso)
-        {
-            var enlace  = Y.Node.create('<a><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></a>');
-            var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
-	enlace.set("href", urlRecurso);
-	enlace.set("ext", recurso.extension);
-	var extension = recurso.extension;
-	enlace.set("id",recurso.id_recurso);
-	enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
-        var columnaImagen = Y.Node.create('<td></td>');
-        columnaImagen.setHTML(enlace);
-	return columnaImagen ;	
-        }
+function crearColumnaImagen(recurso)
+{
+    var enlace  = Y.Node.create('<a><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></a>');
+    
+    var urlRecurso = recurso.url_base + 'recurso/ver/contenido/' + recurso.id_recurso;
+    
+    enlace.set("href", urlRecurso);
+    
+    enlace.set("ext", recurso.extension);
+    
+    var extension = recurso.extension;
+    
+    enlace.set("id",recurso.id_recurso);
+    
+    enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
+    
+    var columnaImagen = Y.Node.create('<td></td>');
+    
+    columnaImagen.setHTML(enlace);
+	
+    return columnaImagen ;	
+}
 
 
-  var handleStart = function(id, a) {
+var handleStart = function(id, a) 
+{
             Y.log("iniciando busqueda");
             //output.set("innerHTML", "<li>Loading news stories via Yahoo! Pipes feed...</li>");
-        }
+}
 
         //Event handler for the success event -- use this handler to write the fetched
         //RSS items to the page.
-        var handleSuccess = function(id, o, a) {
+var handleSuccess = function(id, o, a) 
+{
 
             //We use JSON.parse to sanitize the JSON (as opposed to simply performing an
             //JavaScript eval of the data):
@@ -400,11 +484,11 @@ function crearEnlace(recurso)
             mostrarResultadoT_Busqueda(recursos);
 	   
             
-        }
+}
 
         //In the event that the HTTP status returned does not resolve to,
         //HTTP 2xx, a failure is reported and this function is called:
-        var handleFailure = function(id, o, a) {
+var handleFailure = function(id, o, a) {
             Y.log("ERROR " + id + " " + a, "info", "example");
         }
 
@@ -458,11 +542,11 @@ function crearEnlace(recurso)
 			}
 			
 			
-		}
+}
                 
-         function obtenerURLBusqueda(palabraBuscar,direccionServidor)
-         {
-               var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
+function obtenerURLBusqueda(palabraBuscar,direccionServidor)
+{
+    var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
                 var webServiceAgora = '/agora/recurso/ajax/buscar/?cadena='
                 var urlServidor = new String(direccionServidor);
                        if(urlServidor.charAt(urlServidor.length) == '\\')
@@ -475,6 +559,24 @@ function crearEnlace(recurso)
                   return  urlProxy+direccionServidor+webServiceAgora+e_palabraBuscar;       
                        
          }
+         
+ 
+ function obtenerURLDetalleRecuros(idRecurso,direccionServidor)
+ {
+               var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
+                var webServiceAgora = '/agora/recurso/ajax/describir/?cadena='
+                var urlServidor = new String(direccionServidor);
+                       if(urlServidor.charAt(urlServidor.length) == '\\')
+                         {
+                                 alert('termina con slash')
+                         }
+                         //var e_palabraBuscar = escape(palabraBuscar);
+                         
+                         
+                  return  urlProxy+direccionServidor+webServiceAgora+idRecurso;       
+                       
+}
+
 
 	function aceptarRecurso(o)
 	{
@@ -500,7 +602,8 @@ function crearEnlace(recurso)
                 extension.set('value',extensionSeleccionada);
                 
                 esconderCamposBusqueda();
-		mostrarDetalleRecursoSeleccionado(idRecursoSeleccionado);
+		//mostrarDetalleRecursoSeleccionado(idRecursoSeleccionado);
+                obtenerDetalleRecuro(idRecursoSeleccionado);
 		closebox();
 
 		return false;
@@ -524,6 +627,7 @@ function crearEnlace(recurso)
             Y.one('#acRecurso').remove();
             Y.one('#fitem_boton_buscar').setStyle("display", "");
             Y.one('#resultado_busqueda').set("innerHTML", "");
+            //idRecursoSeleccionado = "";
         }
         
         function esURLValida(url) 
