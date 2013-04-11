@@ -68,7 +68,7 @@ $agorasettings = get_config('agora');
 echo $OUTPUT->header();
 
 if ($agora->intro) { // Conditions to show the intro can change to look for own settings or whatever
-    echo $OUTPUT->box(format_module_intro('agora', $agora, $cm->id), 'generalbox mod_introbox', 'newmoduleintro');
+    echo $OUTPUT->box(format_module_intro('agora', $agora, $cm->id), 'generalbox mod_introbox', 'agora_introl');
 }
 
 // Replace the following lines with you own code
@@ -87,10 +87,10 @@ echo $OUTPUT->container_start('recurso');
 	if($extension == 'swf')
 	{
 		echo $OUTPUT->container_start('visualizacion');
-			echo '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
-				echo '\t<param name="movie" value="'.$agora->url_recurso.'" />';
+			echo '<object id="flash_player" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
+				echo '<param name="movie" value="'.$agora->url_recurso.'" />';
 			//<!--[if !IE]>-->
-				echo '<object type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';
+				echo '<object id="flash_player" type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';
 			//<!--<![endif]-->
 			  
 			//<!--[if !IE]>-->
@@ -103,7 +103,7 @@ echo $OUTPUT->container_start('recurso');
 	{	
 
 	echo $OUTPUT->container_start('visualizacion');
-		echo '<div><iframe src="http://docs.google.com/viewer?url='.urlencode($agora->url_recurso).'&embedded=true" width="600" height="780" style="border: none;"></iframe></div>';
+		echo '<div id="doc_view"><iframe id="document_view" src="http://docs.google.com/viewer?url='.urlencode($agora->url_recurso).'&embedded=true" width="600" height="780" style="border: none;"></iframe></div>';
 	echo $OUTPUT->container_end();
 	}	
 

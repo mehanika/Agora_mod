@@ -17,6 +17,7 @@ M.mod_agora.init = function(Y) {
         var idRecursoSeleccionado = "";
 			
 /*
+ *
  *@param {Integer} id
  *@para {Float}	leve
  *	
@@ -163,7 +164,11 @@ function openboxSWF(titulo,_url)
 	   var hijos = box.get('children');
 	  var prueba = hijos.item(2).remove();
 	}
-
+/**
+ *Valida si la extension del archivo puede ser visualizada
+ *@param {String} extensionArchivo
+ *
+ **/
 
      function esExtensionValida(extensionArchivo)
 	{
@@ -241,7 +246,12 @@ function openboxSWF(titulo,_url)
 		   	  
 			}
 }
-	
+
+/**
+ *Despliega la tabla con los resultados obtenidos en la busqueda
+ *@param {Object} recursos
+ *
+ **/
 	function mostrarResultadoT_Busqueda(recursos)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
@@ -276,23 +286,26 @@ function openboxSWF(titulo,_url)
         
         
       
-
-function mostrarDetalleRecursoSeleccionado(recursoSeleccionado)
+/**
+ * Muestra los datos de un recurso seleccionado
+ **/
+function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
 {
     
-    
+            var recursoSeleccionado = _recursoSeleccionado[0];
                 //var tamañoArreglo = recursoSeleccionado.length;
                 //
                // obtenerDetalleRecuro(idSeleccionada);
-               var tamanoArreglo = recursoSeleccionado.length;
-            
+             
+            Y.log("disciplina: "+recursoSeleccionado.discipline);
             
                // alert(idSeleccionada);
 		var tabla = Y.Node.create('<table id="t_detalleRecurso" ></table>');
 		//fila de nombre del recurso		
 		var filaNombre = Y.Node.create('<tr><td>Titulo</td></tr>');
 		var nombreRecurso = Y.Node.create('<td></td>');
-		nombreRecurso.setHTML(recursoSeleccionado[2].title);
+                var titulo = recursoSeleccionado.title == null ? "Sin titulo" : recursoSeleccionado.title;
+		nombreRecurso.setHTML(titulo);
 		filaNombre.append(nombreRecurso);
 		tabla.append(filaNombre);
                 
@@ -300,7 +313,7 @@ function mostrarDetalleRecursoSeleccionado(recursoSeleccionado)
                 //fila de descripcion
 		var filaDescripcion = Y.Node.create('<tr><td>Descripcion</td></tr>');
 		var descripcionRecurso = Y.Node.create('<td></td>');
-                var descripcion = recursoSeleccionado[56].description;
+                var descripcion = recursoSeleccionado.description == null ? "Sin descripcion" : recursoSeleccionado.description;
                 descripcionRecurso.set("innerHTML",descripcion);
 		filaDescripcion.append(descripcionRecurso);		
 		tabla.append(filaDescripcion);
@@ -309,7 +322,9 @@ function mostrarDetalleRecursoSeleccionado(recursoSeleccionado)
                 //Agregando fila de disciplina
                 var filaDisciplina = Y.Node.create('<tr><td>Disciplina</td></tr>');
                 var disciplinaRecurso = Y.Node.create('<td></td>');
-                descripcionRecurso.set("innerHTML",recursoSeleccionado[58].discipline);
+                var disciplina = recursoSeleccionado.discipline == null ? "Sin descripcion" : recursoSeleccionado.discipline;
+                disciplinaRecurso.set("innerHTML", disciplina);
+                filaDisciplina.append(descripcionRecurso);
                 tabla.append(filaDisciplina);
                 
                 //Agrega todas las filas la tabla	
@@ -335,7 +350,9 @@ function mostrarDetalleRecursoSeleccionado(recursoSeleccionado)
 
 }
 
-
+/**
+ *@param {int} idRecurso identificador del recurso seleccionado
+ **/
 function obtenerDetalleRecuro(idRecurso)
 {
     //obtiene la url del servidor
@@ -349,6 +366,8 @@ function obtenerDetalleRecuro(idRecurso)
          
       Y.log("Respuesta "+o.responseText);   
       var recurso = Y.JSON.parse(o.responseText);
+      Y.log(recurso);
+      
       mostrarDetalleRecursoSeleccionado(recurso);
          
      };
@@ -368,6 +387,10 @@ function obtenerDetalleRecuro(idRecurso)
      var obj = Y.io(urlDetalleRecurso,configuracionPeticion);
 }
 
+/*
+ * @param {Array} recursos Arreglo de resultados de la busqueda de recursos 
+ * @return {Objetc}
+ */
 function mostrarTablaResultados(recursos)
 {
     var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
@@ -386,7 +409,10 @@ function mostrarTablaResultados(recursos)
 	return tabla;
 }
 
-
+/*
+ *@param {Object} recurso Recurso 
+ *
+ */
 function obtenerFila(recurso)
 {
     var fila = Y.Node.create('<tr></tr>');
@@ -440,7 +466,9 @@ function crearEnlace(recurso)
     return enlace;	
 }
         
-        
+/*
+ *        
+ */        
 function crearColumnaImagen(recurso)
 {
     var enlace  = Y.Node.create('<a><img src="' +recurso.icono + '" title="' + recurso.extension + '" width="16" height="16" border="0" /></a>');
@@ -544,6 +572,13 @@ var handleFailure = function(id, o, a) {
 			
 }
                 
+                
+/*
+ *Obtiene la url del servidor para realizar la busqueda
+ *@param {String} palabraBuscar palabra que se desea buscar
+ *@param {String} direccionServidor direccion actual del servidor
+ *@return url de busqueda
+ */                                
 function obtenerURLBusqueda(palabraBuscar,direccionServidor)
 {
     var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
@@ -560,11 +595,16 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
                        
          }
          
- 
+ /*
+  * Obtiene la url para poder obtener los datos de un recurso en especifico
+  * @param {String} idRecurso
+  * @param {String} direccionServidor
+  * @return Direccion para obtener los datos de un recurso 
+  */
  function obtenerURLDetalleRecuros(idRecurso,direccionServidor)
  {
                var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
-                var webServiceAgora = '/agora/recurso/ajax/describir/?cadena='
+                var webServiceAgora = '/agora/recurso/ajax/describir/?id='
                 var urlServidor = new String(direccionServidor);
                        if(urlServidor.charAt(urlServidor.length) == '\\')
                          {
@@ -577,9 +617,11 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
                        
 }
 
-
-	function aceptarRecurso(o)
-	{
+/*
+ * @param {Object}
+ */
+function aceptarRecurso(o)
+{
 
 		o.preventDefault();
 		var checkboxSeleccionado = Y.one("#check_"+idSeleccionada);
@@ -608,8 +650,10 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
 
 		return false;
 	}
-        
-        function esconderCamposBusqueda()
+   /*
+    * Esconde los campos de busqueda
+    */       
+       function esconderCamposBusqueda()
         {
             Y.one('#fitem_campo_busqueda').setStyle("display", "none");
             Y.one('#fitem_urlServidor').setStyle("display", "none");
@@ -619,7 +663,9 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
            
         }
         
-        
+        /*
+         * Muestra los campos de busqueda
+         */
         function mostrarCamposBusqueda()
         {
             Y.one('#fitem_campo_busqueda').setStyle("display", "");
@@ -630,6 +676,9 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
             //idRecursoSeleccionado = "";
         }
         
+        /*
+         * Valida la url del servidor
+         */
         function esURLValida(url) 
         {
         
@@ -645,7 +694,9 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
             }
         }
 
-	
+	/*
+         * 
+         */
 	function seleccionarUnChecbox(o)
 	{
             var checkbox = o.currentTarget;
@@ -669,7 +720,7 @@ function obtenerURLBusqueda(palabraBuscar,direccionServidor)
 
 	
 
-        //add the click handler to the Load button.
+       
         Y.on("click", handleClick, "#boton_buscar");
 	Y.on("click",closebox,"#cancelar");
 	Y.on("click",aceptarRecurso,"#aceptarRecurso");
