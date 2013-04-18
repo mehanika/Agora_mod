@@ -305,7 +305,10 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
 		//fila de nombre del recurso		
 		var filaNombre = Y.Node.create('<tr><td>Titulo</td></tr>');
 		var nombreRecurso = Y.Node.create('<td></td>');
+                
                 var titulo = recursoSeleccionado.title == null ? "Sin titulo" : recursoSeleccionado.title;
+                var campoTextoNombre = Y.Node.create('<input type="text" size="40"/>');
+                campoTextoNombre.set("value",titulo);
 		nombreRecurso.setHTML(titulo);
 		filaNombre.append(nombreRecurso);
 		tabla.append(filaNombre);
@@ -341,7 +344,7 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
                 if(esExtensionValida(extension) || extension == "swf")
                  {
                      
-                     var url = direccionServidor+'/agora/recurso/ver/contenido/'+recursoSeleccionado.id_recurso;
+                     var url = direccionServidor+'recurso/ver/contenido/'+recursoSeleccionado.id_recurso;
                      var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
                      visualizar.on("click",abrirLightBoxT,null,extension,recursoSeleccionado.id_recurso,titulo,url);
                      opciones.append(visualizar);
@@ -376,11 +379,18 @@ function obtenerDetalleRecuro(idRecurso)
     var exitoPeticion = function(id, o, a){
          
          
-      Y.log("Respuesta "+o.responseText);   
-      var recurso = Y.JSON.parse(o.responseText);
-      Y.log(recurso);
-      
-      mostrarDetalleRecursoSeleccionado(recurso);
+      Y.log("Respuesta "+o.responseText); 
+      try {
+        var recurso = Y.JSON.parse(o.responseText);
+        Y.log(recurso);
+        esconderCamposBusqueda();
+        mostrarDetalleRecursoSeleccionado(recurso);
+      }
+      catch (e) {
+        alert('Error al obtener los datos del recurso'); 
+        //mostrarCamposBusqueda();
+      }
+     
          
      };
      
@@ -391,7 +401,10 @@ function obtenerDetalleRecuro(idRecurso)
                 
                 
                 success: exitoPeticion,
-                failure: function(o){ alert('Error al obtener los datos del recurso');}
+                failure: function(o)
+                    { alert('Error al obtener los datos del recurso'); 
+                        mostrarCamposBusqueda();
+                    }
             }
         };
      
@@ -475,7 +488,7 @@ function crearEnlace(recurso)
     
     var tituloRecurso =  recurso.titulo == null ? "Sin t&iacute;tulo" :  recurso.titulo;
     
-    enlace.set("innerHTML", recurso.titulo);
+    enlace.set("innerHTML", tituloRecurso);
 
     enlace.on("click",abrirLightBoxT,null,extension,recurso.id_recurso,recurso.titulo,urlRecurso);
     
@@ -552,16 +565,17 @@ var handleFailure = function(id, o, a) {
 
       
 
-	var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://sel.uady.mx/agora/recurso/ajax/buscar/?cadena=";
-        var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
-        var webServiceAgora = '/agora/recurso/ajax/buscar/?cadena='
+	//var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://sel.uady.mx/agora/recurso/ajax/buscar/?cadena=";
+        //var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
+        //var webServiceAgora = 'recurso/ajax/buscar/?cadena='
        
 	 var handleClick = function(o) {
                 //alert(urlProxy);
 		var palabraBuscar = Y.one("#campo_busqueda").get("value");
 		var e_palabraBuscar = escape(palabraBuscar);
                 direccionServidor = Y.one('#urlServidor').get('value'); 
-		var urlBusqueda = url+e_palabraBuscar;
+		//var urlBusqueda = url+e_palabraBuscar;
+                //var urlBusqueda = urlProxy+direccionServidor+webServiceAgora+e_palabraBuscar;
             
                         
             
@@ -598,7 +612,7 @@ var handleFailure = function(id, o, a) {
 function obtenerURLBusqueda(palabraBuscar,direccionServidor)
 {
     var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
-                var webServiceAgora = '/agora/recurso/ajax/buscar/?cadena='
+                var webServiceAgora = '/recurso/ajax/buscar/?cadena='
                 var urlServidor = new String(direccionServidor);
                        if(urlServidor.charAt(urlServidor.length) == '\\')
                          {
@@ -659,7 +673,7 @@ function aceptarRecurso(o)
                 var extension = Y.one('#extensionRecurso');
                 extension.set('value',extensionSeleccionada);
                 
-                esconderCamposBusqueda();
+                //esconderCamposBusqueda();
 		//mostrarDetalleRecursoSeleccionado(idRecursoSeleccionado);
                 obtenerDetalleRecuro(idRecursoSeleccionado);
 		closebox();
