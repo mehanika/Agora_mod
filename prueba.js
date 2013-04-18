@@ -2,7 +2,7 @@
  * @namespace
  */
 M.mod_agora = M.mod_agora || {};
-
+var direccionServidor;
 /**
  * This function is initialized from PHP
  *
@@ -15,6 +15,7 @@ M.mod_agora.init = function(Y) {
 	var idSeleccionada = "";
         var extensionSeleccionada ="";
         var idRecursoSeleccionado = "";
+        direccionServidor = Y.one('#urlServidor').get('value'); 
 			
 /*
  *
@@ -173,7 +174,7 @@ function openboxSWF(titulo,_url)
      function esExtensionValida(extensionArchivo)
 	{
 
-		if(extensionArchivo == "ppt" || extensionArchivo == "pdf" || extensionArchivo == "doc" || extensionArchivo == "odt" || 			extensionArchivo == "xls")
+		if(extensionArchivo == "ppt" || extensionArchivo == "pdf" || extensionArchivo == "doc" || extensionArchivo == "odt" || 	extensionArchivo == "xls")
 		{
 			return true;
 		}else{
@@ -314,6 +315,7 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
 		var filaDescripcion = Y.Node.create('<tr><td>Descripcion</td></tr>');
 		var descripcionRecurso = Y.Node.create('<td></td>');
                 var descripcion = recursoSeleccionado.description == null ? "Sin descripcion" : recursoSeleccionado.description;
+                Y.log("desc "+descripcion);
                 descripcionRecurso.set("innerHTML",descripcion);
 		filaDescripcion.append(descripcionRecurso);		
 		tabla.append(filaDescripcion);
@@ -322,9 +324,9 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
                 //Agregando fila de disciplina
                 var filaDisciplina = Y.Node.create('<tr><td>Disciplina</td></tr>');
                 var disciplinaRecurso = Y.Node.create('<td></td>');
-                var disciplina = recursoSeleccionado.discipline == null ? "Sin descripcion" : recursoSeleccionado.discipline;
+                var disciplina = recursoSeleccionado.discipline == null ? "Sin desciplina" : recursoSeleccionado.discipline;
                 disciplinaRecurso.set("innerHTML", disciplina);
-                filaDisciplina.append(descripcionRecurso);
+                filaDisciplina.append(disciplinaRecurso);
                 tabla.append(filaDisciplina);
                 
                 //Agrega todas las filas la tabla	
@@ -334,7 +336,17 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
                 
                 
 		//Botones de visualizacion
-		var opciones = Y.Node.create('<id = "opciones" div><input id="vis" type="button" name="visualizar" value="Visualizar"/></div>');
+		var opciones = Y.Node.create('<id = "opciones" div></div>');
+                var extension = recursoSeleccionado.extension;
+                if(esExtensionValida(extension) || extension == "swf")
+                 {
+                     
+                     var url = direccionServidor+'/agora/recurso/ver/contenido/'+recursoSeleccionado.id_recurso;
+                     var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
+                     visualizar.on("click",abrirLightBoxT,null,extension,recursoSeleccionado.id_recurso,titulo,url);
+                     opciones.append(visualizar);
+                 }   
+                    
 	        //var visualizar = Y.Node.create('<input type="button" value="Visualizar"/>');
 		var cancelar = Y.Node.create('<input type="button" value="Cancelar"/>');
                 cancelar.on('click',mostrarCamposBusqueda);
@@ -423,7 +435,9 @@ function obtenerFila(recurso)
     
     var enlace = crearEnlace(recurso);
     
-    var descripcion = Y.Node.create('<br/>'+recurso.descripcion+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
+    var descripcionRecurso   = recurso.descripcion == null ? "Sin descripcion" :recurso.descripcion;
+    
+    var descripcion = Y.Node.create('<br/>'+descripcionRecurso+ '<br/>Extension: <span id="ext_'+recurso.id_recurso+'">'+recurso.extension+'</span>');
     
     var columnaRecurso = Y.Node.create('<td></td>');
     
@@ -458,6 +472,8 @@ function crearEnlace(recurso)
     var extension = recurso.extension;
     
     enlace.set("id",recurso.id_recurso);
+    
+    var tituloRecurso =  recurso.titulo == null ? "Sin t&iacute;tulo" :  recurso.titulo;
     
     enlace.set("innerHTML", recurso.titulo);
 
@@ -544,7 +560,7 @@ var handleFailure = function(id, o, a) {
                 //alert(urlProxy);
 		var palabraBuscar = Y.one("#campo_busqueda").get("value");
 		var e_palabraBuscar = escape(palabraBuscar);
-                var direccionServidor = Y.one('#urlServidor').get('value'); 
+                direccionServidor = Y.one('#urlServidor').get('value'); 
 		var urlBusqueda = url+e_palabraBuscar;
             
                         

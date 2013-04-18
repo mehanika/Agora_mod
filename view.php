@@ -87,7 +87,7 @@ echo $OUTPUT->container_start('recurso');
 	if($extension == 'swf')
 	{
 		echo $OUTPUT->container_start('visualizacion');
-			echo '<object id="flash_player" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="780" height="420">';
+			echo '<object id="flash_player" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="80%" height="40%">';
 				echo '<param name="movie" value="'.$agora->url_recurso.'" />';
 			//<!--[if !IE]>-->
 				echo '<object id="flash_player" type="application/x-shockwave-flash" data="'.$agora->url_recurso.'" width="780" height="420">';

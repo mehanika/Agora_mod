@@ -168,13 +168,17 @@ display: none
 div.descarga{
     
     width: 50%;
-    height: 10%;
+    height: 20%;
+}
+
+div.visualizacion{
+    margin-left: auto;
+   margin-right: auto;
 }
 
 #flash_player{
-    
-    width: 80%;
-    height: 80%;
+   margin-left: auto;
+   margin-right: auto;
 }
 
 #doc_view{
