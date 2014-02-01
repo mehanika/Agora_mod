@@ -31,6 +31,6 @@ if ($ADMIN->fulltree) {
 
 
     //--- general settings -----------------------------------------------------------------------------------
-    $settings->add(new admin_setting_configtext('urlServidor', 'urlServidor', 'Direccion del servidor de agora', 'http://smile.esi.uclm.es',PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('urlServidor', 'urlServidor', 'Direccion del servidor de agora', 'http://www.agora.uady.mx/',PARAM_TEXT));
 }
 
