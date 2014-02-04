@@ -12,6 +12,7 @@ M.mod_agora.init = function(Y) {
    
 	var urlSeleccionada = false;
 	var tituloRecursoSeleccionado = false;
+	var checkboxManager = {};
 	var idSeleccionada = "";
         var extensionSeleccionada ="";
         var idRecursoSeleccionado = "";
@@ -279,7 +280,7 @@ function openboxSWF(titulo,_url)
 		}else{
 			resultado_busqueda.setStyle("display", "");
 
-			new Y.AtMostOneCheckboxGroup('.idRecurso');
+			checkboxManager = new Y.AtMostOneCheckboxGroup('.idRecurso');
 
 		
 		}
@@ -654,6 +655,10 @@ function aceptarRecurso(o)
 {
 
 		o.preventDefault();
+
+		var checkSeleccionado =  Y.one("input.idRecurso:checked");
+		console.log("id recurso seleccionado"+checkSeleccionado.get("value"));
+
 		var checkboxSeleccionado = Y.one("#check_"+idSeleccionada);
 		//checkboxSeleccionado.set("checked","true");	
 		
@@ -680,6 +685,18 @@ function aceptarRecurso(o)
 
 		return false;
 	}
+
+	/**
+	*	Obtiene el identificador de recurso seleccionado
+	*
+	*/
+
+	function obtenerIdRecursoSeleccionado()
+	{
+
+	}
+
+
    /*
     * Esconde los campos de busqueda
     */       
@@ -705,6 +722,9 @@ function aceptarRecurso(o)
             Y.one('#resultado_busqueda').set("innerHTML", "");
             //idRecursoSeleccionado = "";
         }
+
+
+
         
         /*
          * Valida la url del servidor
