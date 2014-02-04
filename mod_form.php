@@ -46,7 +46,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	$jsmodule = array(
 	    'name'     => 'mod_agora',
 	    'fullpath' => '/mod/agora/prueba.js',
-	    'requires' => array('base','gallery-checkboxgroups','io', 'json-parse', 'attribute','node' ,'json-stringify','stylesheet'),
+	    'requires' => array('base','gallery-checkboxgroups','io', 'json-parse', 'attribute','node' ,'json-stringify','stylesheet','template-base', 'handlebars'),
   
 	);
 
