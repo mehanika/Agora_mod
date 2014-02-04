@@ -278,8 +278,8 @@ function openboxSWF(titulo,_url)
 						
 		}else{
 			resultado_busqueda.setStyle("display", "");
-			
-			//new Y.AtMostOneCheckboxGroup('.idRecurso');
+
+			new Y.AtMostOneCheckboxGroup('.idRecurso');
 
 		
 		}
@@ -754,6 +754,5 @@ function aceptarRecurso(o)
         Y.on("click", handleClick, "#boton_buscar");
 	Y.on("click",closebox,"#cancelar");
 	Y.on("click",aceptarRecurso,"#aceptarRecurso");
-	Y.delegate("click",seleccionarUnChecbox,'#resultado_busqueda', 'input.idRecurso');
-       
+	
 }
