@@ -658,7 +658,8 @@ function aceptarRecurso(o)
 
 		//obteniendo id de el recurso selecionado
 		var checkSeleccionado =  Y.one("input.idRecurso:checked");
-		if(checkSeleccionado)
+		
+		if(checkSeleccionado == null)
 		{
 			alert("No se ha seleccionado ningun recurso");
 			console.log("No se ha seleccionado ningun recurso");
