@@ -656,32 +656,39 @@ function aceptarRecurso(o)
 
 		o.preventDefault();
 
+		//obteniendo id de el recurso selecionado
 		var checkSeleccionado =  Y.one("input.idRecurso:checked");
-		console.log("id recurso seleccionado"+checkSeleccionado.get("value"));
+		if(checkSeleccionado)
+		{
+			alert("No se ha seleccionado ningun recurso");
+			console.log("No se ha seleccionado ningun recurso");
+		}
+		else
+		{
+			var _idRecurso = checkSeleccionado.get("value");
+			console.log("id recurso seleccionado: "+_idRecurso);
 
-		var checkboxSeleccionado = Y.one("#check_"+idSeleccionada);
-		//checkboxSeleccionado.set("checked","true");	
-		
-
-		//Estableciendo la url del recurso		
-		var urlRecurso =  Y.one("#urlRecurso");
+			var urlRecurso =  Y.one("#urlRecurso");
 			
-		urlRecurso.set("value",urlSeleccionada);
+			urlRecurso.set("value",urlSeleccionada);
 		
-		//Estableciendo el titulo del recurso
-		var titulo =  Y.one("#tituloRecurso");
-		
-		titulo.set("value",tituloRecursoSeleccionado);
+			//Estableciendo el titulo del recurso
+			var titulo =  Y.one("#tituloRecurso");
+			
+			titulo.set("value",tituloRecursoSeleccionado);
 	
         
-                //Estableciendo la extension del recurso
-                var extension = Y.one('#extensionRecurso');
-                extension.set('value',extensionSeleccionada);
+            //Estableciendo la extension del recurso
+            var extension = Y.one('#extensionRecurso');
+            extension.set('value',extensionSeleccionada);
                 
-                //esconderCamposBusqueda();
-		//mostrarDetalleRecursoSeleccionado(idRecursoSeleccionado);
-                obtenerDetalleRecuro(idRecursoSeleccionado);
-		closebox();
+             
+            obtenerDetalleRecuro(_idRecurso);
+			closebox();
+		}
+		
+
+		
 
 		return false;
 	}
