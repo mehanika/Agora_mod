@@ -461,7 +461,7 @@ function abrirVistaPreviaArchivo(element){
 	var direccionRecurso = element.target.get('href');
 	console.log(direccionRecurso);
 
-	var n = str.lastIndexOf('/');
+	var n = direccionRecurso.lastIndexOf('/');
 
 	var idRecurso = direccionRecurso.substring(n+1);
 
