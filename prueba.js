@@ -457,7 +457,7 @@ function establecerEscuchadores(idRecurso){
 function abrirVistaPreviaArchivo(element){
 
 	element.preventDefault();
-
+	console.log(element);
 	var direccionRecurso = Y.one(element);
 	Y.log(direccionRecurso);
 
