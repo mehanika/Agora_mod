@@ -43,10 +43,10 @@ function program1(depth0,data) {
   else { helper = (depth0 && depth0.id_recurso); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + "\" class=\"preview_link\">\r\n					";
-  stack1 = helpers['if'].call(depth0, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.titulo), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\r\n					<br/>\r\n					";
-  stack1 = helpers['if'].call(depth0, {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
+  stack1 = helpers['if'].call(depth0, (depth0 && depth0.descripcion), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += " \r\n					<br/>Extension: <span id=\"ext_";
   if (helper = helpers.id_recurso) { stack1 = helper.call(depth0, {hash:{},data:data}); }
