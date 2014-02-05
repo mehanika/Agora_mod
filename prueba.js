@@ -428,9 +428,9 @@ function mostrarTablaResultados(recursos)
             return;
         }
         console.log(M.cfg);
-
+        Y.log(Y.Handlebars);
         // Render the template and insert its output into the page.
-        var output = Y.Handlebars.templates['my-template']({food: 'pie'});
+        var output = Y.Handlebars.templates['table-template'](recursos);
         Y.one('#content').append(output);
     });
 
