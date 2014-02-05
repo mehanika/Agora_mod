@@ -421,14 +421,18 @@ function mostrarTablaResultados(recursos)
 {
 
    // Load the precompiled template JS onto the page.
+    //console.log(M.cfg);
+        
+    window.Handlebars = Y.Handlebars;
+    
     Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/table-template.js', function (err) {
+        
         if (err) {
             Y.error('Template failed to load: ' + err);
             console.log(err);
             return;
         }
-        console.log(M.cfg);
-        Y.log(Y.Handlebars);
+
         // Render the template and insert its output into the page.
         var output = Y.Handlebars.templates['table-template'](recursos);
         Y.one('#content').append(output);
