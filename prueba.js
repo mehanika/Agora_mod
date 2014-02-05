@@ -421,11 +421,12 @@ function mostrarTablaResultados(recursos)
 {
 
    // Load the precompiled template JS onto the page.
-    Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/precompiled-template.js', function (err) {
+    Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/table-template.js', function (err) {
         if (err) {
             Y.error('Template failed to load: ' + err);
             return;
         }
+        console.log(M.cfg);
 
         // Render the template and insert its output into the page.
         var output = Y.Handlebars.templates['my-template']({food: 'pie'});
