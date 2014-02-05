@@ -437,11 +437,71 @@ function mostrarTablaResultados(recursos)
         var output = Y.Handlebars.templates['table-template']({recurso:recursos});
         Y.log(output);
         Y.one("#resultado_busqueda").setHTML(output);
+        establecerEscuchadores();
     });
 
     
 
 	return tabla;
+}
+
+
+function establecerEscuchadores(idRecurso){
+
+	//Estableciendo accion para la imagen
+	Y.on("click", abrirVistaPreviaArchivo,"a.preview_link")
+
+}
+
+
+function abrirVistaPreviaArchivo(element){
+
+	element.preventDefault();
+
+	var direccionRecurso = element.get('href');
+
+	var n = str.lastIndexOf('/');
+
+	var idRecurso = direccionRecurso.substring(n+1);
+
+	Y.log("id recurso "+idRecurso);
+
+	var direccionServidor = Y.one('#urlServidor').get('value');
+    
+    //obtiene la url para hacer la peticion de los datos del recurso
+    var urlDetalleRecurso =  obtenerURLDetalleRecuros(idRecurso, direccionServidor);
+
+     var configuracionPeticion = {
+            method: "GET",
+          
+            on: {
+                
+                
+                success: function(id, o, a){
+
+				      try {
+				        var recurso = Y.JSON.parse(o.responseText);
+				        Y.log(recurso);
+				        esconderCamposBusqueda();
+				        
+				      }
+				      catch (e) {
+				        alert('Error al obtener los datos del recurso'); 
+				        Y.error(e);
+				        mostrarCamposBusqueda();
+
+				      }
+
+                },
+                failure: function(o)
+                    { alert('Error al obtener los datos del recurso'); 
+                        mostrarCamposBusqueda();
+                    }
+            }
+        };
+     
+     Y.io.header('X-Requested-With');
+     var obj = Y.io(urlDetalleRecurso,configuracionPeticion);
 }
 
 /*
