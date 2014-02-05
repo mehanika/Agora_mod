@@ -1,5 +1,4 @@
-<table id="t_resultadoBusqueda" >
-	{{#each recurso}} 
+{{#each recurso}} 
 		<tr>
 			<td><input type="checkbox" class="idRecurso" value="{{id_recurso}}" id="check_{{recurso.id_recurso}}"/>
 		
@@ -27,5 +26,4 @@
 										<br/>Extension: <span id="ext_{{id_recurso}}">{{extension}}</span>
 			</td>
 		</tr>
-	{{/each}}
-</table>
+{{/each}}

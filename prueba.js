@@ -258,8 +258,6 @@ function openboxSWF(titulo,_url)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
                 
-			var tablaResultados = mostrarTablaResultados(recursos);
-			resultado_busqueda.setHTML(tablaResultados);
                         
                         //Checando
                         
@@ -436,7 +434,7 @@ function mostrarTablaResultados(recursos)
         // Render the template and insert its output into the page.
         var output = Y.Handlebars.templates['table-template']({recurso:recursos});
         Y.log(output);
-        Y.one("#resultado_busqueda").setHTML(output);
+        Y.one("#t_resultadoBusqueda").setHTML(output);
         establecerEscuchadores();
     });
 

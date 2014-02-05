@@ -101,7 +101,7 @@ class mod_agora_mod_form extends moodleform_mod {
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
 	
         //$mform->addElement('static', 'hotpot_mod_form_js', '', $js);
-	$mform->addElement('static', 'resultado_busqueda', '', '<span id="div_agora"><div id="resultado_busqueda" style="display:none;"></div><span id="aceptarRecursoSelect"></span></span>');
+	$mform->addElement('static', 'resultado_busqueda', '', '<span id="div_agora"><div id="resultado_busqueda" style="display:none;"><table id="t_resultadoBusqueda" ></table></div><span id="aceptarRecursoSelect"></span></span>');
 	$mform->addElement('static', 'detalle_recurso', '', '<div id="detalleRecurso" ></div>');
 	$mform->addElement('static', 'lightbox', '', $lightbox);
 	

@@ -3,7 +3,7 @@
 templates['table-template'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
+  var stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
@@ -22,7 +22,7 @@ function program1(depth0,data) {
   if (helper = helpers.id_recurso) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id_recurso); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\" id=\"";
+    + "\" id=\"link_";
   if (helper = helpers.id_recurso) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id_recurso); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -42,6 +42,10 @@ function program1(depth0,data) {
   if (helper = helpers.id_recurso) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.id_recurso); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
+    + "\" id=\"title_";
+  if (helper = helpers.id_recurso) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.id_recurso); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
     + "\" class=\"preview_link\">\r\n					";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.titulo), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -56,7 +60,7 @@ function program1(depth0,data) {
   if (helper = helpers.extension) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.extension); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "</span>\r\n			</td>\r\n		</tr>\r\n	";
+    + "</span>\r\n			</td>\r\n		</tr>\r\n";
   return buffer;
   }
 function program2(depth0,data) {
@@ -93,10 +97,8 @@ function program8(depth0,data) {
   return "\r\n						Sin descripci&oacute;n\r\n					";
   }
 
-  buffer += "<table id=\"t_resultadoBusqueda\" >\r\n	";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.recurso), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\r\n</table>";
-  return buffer;
+  if(stack1 || stack1 === 0) { return stack1; }
+  else { return ''; }
   });
 })();
