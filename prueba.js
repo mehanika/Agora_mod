@@ -424,6 +424,7 @@ function mostrarTablaResultados(recursos)
     Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/table-template.js', function (err) {
         if (err) {
             Y.error('Template failed to load: ' + err);
+            console.log(err);
             return;
         }
         console.log(M.cfg);
