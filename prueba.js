@@ -434,7 +434,7 @@ function mostrarTablaResultados(recursos)
         }
 
         // Render the template and insert its output into the page.
-        var output = Y.Handlebars.templates['table-template'](recursos);
+        var output = Y.Handlebars.templates['table-template']({recurso:recursos});
         Y.log(output);
         Y.one("#resultado_busqueda").setHTML(output);
     });
