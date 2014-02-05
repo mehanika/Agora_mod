@@ -458,7 +458,7 @@ function abrirVistaPreviaArchivo(element){
 
 	element.preventDefault();
 
-	var direccionRecurso = element.get('href');
+	var direccionRecurso = Y.one(element).get('href');
 
 	var n = str.lastIndexOf('/');
 
