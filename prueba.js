@@ -389,7 +389,7 @@ function obtenerDetalleRecuro(idRecurso)
       }
       catch (e) {
         alert('Error al obtener los datos del recurso'); 
-        //mostrarCamposBusqueda();
+        
       }
      
          
@@ -419,19 +419,40 @@ function obtenerDetalleRecuro(idRecurso)
  */
 function mostrarTablaResultados(recursos)
 {
-    var tabla = Y.Node.create('<table id="t_resultadoBusqueda" ></table>');
-    
-    for(var i = 0; i < recursos.length; i++) 
-       {
-    
-            var recurso = recursos[i];
-		
-            var filaActual = obtenerFila(recurso);
-	
-            tabla.append(filaActual);
-        
-       }
 
+	var tableTemplate = '<table id="t_resultadoBusqueda" >
+	{{#each recurso}} 
+		<tr>
+			<td><input type="checkbox" class="idRecurso" value="{{id_recurso}}" id="check_{{recurso.id_recurso}}"/></td>
+			<td>
+				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" id="{{id_recurso}} class="preview_link">
+					<img src="{{icono}}" title="{{extension}}" width="16" height="16" border="0" />
+				</a>
+			</td>
+			<td>
+				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" class="preview_link">
+					{{#if}}
+						{{titulo}}
+					{{else}}
+						Sin t&iacute;tulo
+					{{/if}}
+					<br/>
+					{{#if}}
+						{{descripcion}}
+					{{else}}
+						Sin descripci&oacute;n
+					{{/if}} 
+					<br/>Extension: <span id="ext_{{id_recurso}}">{{extension}}</span>
+				</a>
+			</td>
+		</tr>
+	{{/each}}
+	</table>';
+
+	var handlebars = new Y.Template(Y.Handlebars),
+    var    tabla       = handlebars.render(tableTemplate, recursos);
+
+    
 	return tabla;
 }
 
@@ -565,18 +586,13 @@ var handleFailure = function(id, o, a) {
         };
 
       
-
-	//var url = "http://localhost/moodle/mod/agora/proxy_s.php?url=http://sel.uady.mx/agora/recurso/ajax/buscar/?cadena=";
-        //var urlProxy = M.cfg.wwwroot+'/mod/agora/proxy_s.php?url=';
-        //var webServiceAgora = 'recurso/ajax/buscar/?cadena='
        
 	 var handleClick = function(o) {
-                //alert(urlProxy);
+     
 		var palabraBuscar = Y.one("#campo_busqueda").get("value");
 		var e_palabraBuscar = escape(palabraBuscar);
                 direccionServidor = Y.one('#urlServidor').get('value'); 
-		//var urlBusqueda = url+e_palabraBuscar;
-                //var urlBusqueda = urlProxy+direccionServidor+webServiceAgora+e_palabraBuscar;
+	
             
                         
             
