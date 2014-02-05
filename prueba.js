@@ -420,39 +420,20 @@ function obtenerDetalleRecuro(idRecurso)
 function mostrarTablaResultados(recursos)
 {
 
-	var tableTemplate = '<table id="t_resultadoBusqueda" >
-	{{#each recurso}} 
-		<tr>
-			<td><input type="checkbox" class="idRecurso" value="{{id_recurso}}" id="check_{{recurso.id_recurso}}"/></td>
-			<td>
-				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" id="{{id_recurso}} class="preview_link">
-					<img src="{{icono}}" title="{{extension}}" width="16" height="16" border="0" />
-				</a>
-			</td>
-			<td>
-				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" class="preview_link">
-					{{#if}}
-						{{titulo}}
-					{{else}}
-						Sin t&iacute;tulo
-					{{/if}}
-					<br/>
-					{{#if}}
-						{{descripcion}}
-					{{else}}
-						Sin descripci&oacute;n
-					{{/if}} 
-					<br/>Extension: <span id="ext_{{id_recurso}}">{{extension}}</span>
-				</a>
-			</td>
-		</tr>
-	{{/each}}
-	</table>';
+   // Load the precompiled template JS onto the page.
+    Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/precompiled-template.js', function (err) {
+        if (err) {
+            Y.error('Template failed to load: ' + err);
+            return;
+        }
 
-	var handlebars = new Y.Template(Y.Handlebars),
-    var    tabla       = handlebars.render(tableTemplate, recursos);
+        // Render the template and insert its output into the page.
+        var output = Y.Handlebars.templates['my-template']({food: 'pie'});
+        Y.one('#content').append(output);
+    });
 
     
+
 	return tabla;
 }
 
