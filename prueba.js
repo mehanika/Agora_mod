@@ -424,7 +424,7 @@ function mostrarTablaResultados(recursos)
     //console.log(M.cfg);
         
     window.Handlebars = Y.Handlebars;
-    
+    var tabla = null;
     Y.Get.js(M.cfg.wwwroot+'/mod/agora/js_templates/table-template.js', function (err) {
         
         if (err) {
@@ -435,7 +435,8 @@ function mostrarTablaResultados(recursos)
 
         // Render the template and insert its output into the page.
         var output = Y.Handlebars.templates['table-template'](recursos);
-        Y.one('#content').append(output);
+        Y.log(output);
+        Y.one("#resultado_busqueda").setHTML(output);
     });
 
     
