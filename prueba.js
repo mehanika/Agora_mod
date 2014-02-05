@@ -258,6 +258,8 @@ function openboxSWF(titulo,_url)
 	{
 		var resultado_busqueda = Y.one("#resultado_busqueda");
                 
+			 mostrarTablaResultados(recursos);
+			//resultado_busqueda.setHTML(tablaResultados);
                         
                         //Checando
                         
